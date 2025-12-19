@@ -1,0 +1,443 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class C_Sisa_Spj_Ls extends CI_Controller {
+
+	function __construct()
+	{	
+		parent::__construct();
+		 $this->load->model('sisa_spj/M_Sisa_Spj');
+	}
+	
+	function index($offset=0,$lctabel,$field,$field1,$judul,$list,$lccari)
+	{
+		$data['page_title'] = " $judul";
+        if(empty($lccari)){
+            $total_rows = $this->tukd_model->get_count($lctabel);
+            $lc = "/.$lccari";
+        }else{
+            $total_rows = $this->tukd_model->get_count_teang($lctabel,$field,$field1,$lccari);
+            $lc = "";
+        }
+		// pagination        
+        if(empty($lccari)){
+		$config['base_url']		= site_url("tukd/".$list);
+        }else{
+        $config['base_url']		= site_url("tukd/cari_".$list);    
+        }
+		$config['total_rows'] 	= $total_rows;
+		$config['per_page'] 	= '10';
+		$config['uri_segment'] 	= 3;
+		$config['num_links'] 	= 5;
+		$config['full_tag_open'] = '<ul class="page-navi">';
+		$config['full_tag_close'] = '</ul>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['cur_tag_open'] = '<li class="current">';
+		$config['cur_tag_close'] = '</li>';
+		$config['prev_link'] = '&lt;';
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['next_link'] = '&gt;';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		$config['last_link'] = 'Last';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['first_link'] = 'First';
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$limit            		= $config['per_page'];  
+		$offset         		= $this->uri->segment(3);  
+		$offset         		= ( ! is_numeric($offset) || $offset < 1) ? 0 : $offset;  
+		  
+		if(empty($offset))  
+		{  
+			$offset=0;  
+		}
+
+
+        if(empty($lccari)){     
+		$data['list'] 		= $this->master_model->getAll($lctabel,$field,$limit, $offset);
+        }else {
+            $data['list'] 		= $this->master_model->getCari($lctabel,$field,$field1,$limit,$offset,$lccari);
+        }
+		$data['num']		= $offset;
+		$data['total_rows'] = $total_rows;
+		
+				$this->pagination->initialize($config);
+		$a=$judul;
+		$this->template->set('title', 'PENATAUSAHAAN ');
+		$this->template->load('template', "tukd/".$list."/list", $data);
+	}
+	
+	
+function cetak_sisa_ls() {  
+      //$cetak = $this->uri->segment(3);
+      //$kd_skpd  = $this->session->userdata('kdskpd');
+        $thn_ang = $this->session->userdata('pcThang');
+        $no_sp2d = $_REQUEST['bulan'];
+         // $lcskpd = $_REQUEST['kd_skpd'];
+        $lcskpd = '1.20.05.01';
+         $pilih = $_REQUEST['cpilih'];
+         $bulana= $_REQUEST['bulana'];
+        $lcperiode = $this->tukd_model->getBulan($bulana);
+
+         // echo "<script>alert($bulan)</script>";
+
+         // echo "<script>alert($lcskpd)</script>";
+         if ($pilih==2) {
+          
+        $csql3 = "SELECT DISTINCT a.no_sp2d,a.tgl_sp2d,a.nilai AS jum_sp2d,b.no_bukti,d.kd_kegiatan,d.kd_rek5,d.nilai AS jum_spj 
+           FROM trhsp2d a LEFT JOIN trhtransout_ppkd b ON a.no_sp2d=b.no_sp2d
+           LEFT JOIN trhkasin_pkd c ON c.tk = a.no_sp2d
+           LEFT JOIN trdtransout_ppkd d ON d.no_sp2d = a.no_sp2d
+           WHERE a.jns_spp = '5' AND a.kd_skpd = '$lcskpd'
+           AND a.no_sp2d = '$no_sp2d' ";
+         }else{
+                $csql3 = "SELECT a.no_sp2d,a.tgl_kas,a.nilai,a.keperluan,
+          (SELECT SUM(nilai) AS n_sp2d FROM trdtransout_ppkd b WHERE b.no_sp2d = a.no_sp2d) AS n_sp2d,
+          (SELECT DISTINCT c.kd_kegiatan FROM trhspp c WHERE c.no_spp = a.no_spp) AS kode_kegiatan
+          FROM trhsp2d a WHERE a.jns_spp = '5' AND a.kd_skpd = '$lcskpd' and month(a.tgl_kas)='$bulana'";    
+            //$csql3 = "SELECT no_sp2d, tgl_sp2d,nilai, keperluan FROM trhsp2d WHERE kd_skpd = '$lcskpd' AND jns_spp = '3' AND no_sp2d='$no_sp2d' ORDER BY no_sp2d ASC " ;
+         }
+
+
+         $csql="SELECT a.nm_skpd,a.kd_skpd,(SELECT jabatan FROM ms_ttd WHERE kode = 'PA' AND kd_skpd = a.kd_skpd) AS jab_pa,
+                (SELECT nama FROM ms_ttd WHERE kode = 'PA' AND kd_skpd = a.kd_skpd) AS nm_pa,
+                (SELECT nip FROM ms_ttd WHERE kode = 'PA' AND kd_skpd = a.kd_skpd) AS nip_pa,
+                (SELECT jabatan FROM ms_ttd WHERE kode = 'BK' AND kd_skpd = a.kd_skpd) AS jab_bk,
+                (SELECT nama FROM ms_ttd WHERE kode = 'BK' AND kd_skpd = a.kd_skpd) AS nm_bk,
+                (SELECT nip FROM ms_ttd WHERE kode = 'BK' AND kd_skpd = a.kd_skpd) AS nip_bk
+                 FROM ms_skpd a WHERE  a.kd_skpd = '$lcskpd'";
+                
+         $hasil = $this->db->query($csql);
+         $trh2 = $hasil->row(); 
+
+         $cRet = "";
+         $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"0\" cellspacing=\"1\" cellpadding=\"1\">
+            <tr>
+                <td align=\"center\" colspan=\"16\" style=\"font-size:16px;border: solid 1px white;border-bottom:none;\"><b>REKAPITULASI SISA LS</b></td>
+            </tr>
+         
+            <tr>
+                <td align=\"left\" style=\"font-size:12px;\">&nbsp;</td>
+                <td align=\"left\" style=\"font-size:12px;\"></td>
+            </tr></table>";
+           // $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"0\" cellspacing=\"1\" cellpadding=\"1\"> 
+           //  <tr>
+           //      <td  width=\"10%\" align=\"left\" style=\"font-size:12px;\">SKPD</td>
+           //      <td  width=\"90%\" align=\"left\" style=\"font-size:12px;\">:&nbsp;$trh2->kd_skpd / $trh2->nm_skpd</td>
+           //  </tr>
+      
+           //  <tr>
+           //      <td align=\"left\" style=\"font-size:12px;\">&nbsp;</td>
+           //      <td align=\"left\" style=\"font-size:12px;\"></td>
+           //  </tr>            
+           //  </table>";
+           
+            if ($pilih==2) {
+              # code...
+              $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"0\" cellspacing=\"1\" cellpadding=\"1\"> 
+            <tr>
+                <td  width=\"10%\" align=\"left\" style=\"font-size:12px;\"><b>SKPD</b></td>
+                <td  width=\"90%\" align=\"left\" style=\"font-size:12px;\"><b>:&nbsp;$trh2->kd_skpd / $trh2->nm_skpd</b></td>
+            </tr>
+            
+      
+            <tr>
+                <td align=\"left\" style=\"font-size:12px;\">&nbsp;</td>
+                <td align=\"left\" style=\"font-size:12px;\"></td>
+            </tr>            
+            </table>";
+             $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"1\" cellspacing=\"1\" cellpadding=\"1\">
+            <thead>
+                <tr>
+                    <td align=\"center\" colspan=\"4\" width=\"60%\" style=\"font-size:20px\">SP2D</td>
+                    <td align=\"center\" colspan=\"4\" width=\"60%\" style=\"font-size:20px\">SPJ</td>
+                 
+                    <td align=\"center\" rowspan=\"2\"  width=\"10%\" style=\"font-size:20px\">SISA SP2D</td>                   
+                    
+                   
+                </tr>
+                <tr>
+                     <td width=\"30%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>NO SP2D<b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>KODE KEGIATAN</b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>KODE REK<b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>JUMLAH SP2D<b></td>
+
+                     <td width=\"20%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>NO BUKTI<b></td>
+                     <td width=\"20%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>KODE KEGIATAN</b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>KODE REK5<b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>JUMLAH SPJ<b></td>
+              
+                </tr>
+                <tr>
+                     <td width=\"30%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>1<b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>2</b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>3<b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>4<b></td>
+
+                     <td width=\"20%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>5<b></td>
+                     <td width=\"20%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>6</b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>7<b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>8<b></td>
+                     <td width=\"10%\" bgcolor=\"#CCCCCC\" align=\"center\"><b>9<b></td>
+              
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan=\"9\" valign=\"top\" align=\"center\" style=\"font-size:12px;border-bottom:none;border-top:solid 1px black;\"></td>
+                 </tr>
+            </tfoot>
+
+           ";
+           $n_total_kas = 0;
+          $n_jum_spj = 0;
+          $hasil = $this->db->query($csql3);
+         foreach ($hasil->result() as $row){
+          $no_sp2d = $row->no_sp2d; 
+         $nilai = $row->jum_sp2d;
+         $n_nilai_sp2d = number_format($nilai ,0,',','.');
+         $no_bukti = $row->no_bukti;
+         $kode_kegiatan = $row->kd_kegiatan;
+         $kd_rek5 = $row->kd_rek5;
+         $nilai_spj = $row->jum_spj;
+         $n_nilai_spj = number_format($nilai_spj ,0,',','.');
+         $n_jum_spj =  $n_jum_spj + $nilai_spj;
+         $j_jum_spj = number_format($n_jum_spj ,0,',','.');
+          $sisa_sp2d = $nilai - $n_jum_spj;
+          $n_sisa_sp2d = number_format($sisa_sp2d ,0,',','.');
+          $n_kas = $row->total;
+          $n_total_kas = $n_total_kas + $n_kas;
+          $j_total_kas = number_format($n_total_kas ,0,',','.');
+        
+           
+            $cRet .= 
+                  "<tr>
+                    <td align=\"center\" width=\"10%\" style=\"font-size:16px\">$no_sp2d</td>
+                    <td align=\"center\" style=\"font-size:16px\"></td>
+                    <td align=\"center\" style=\"font-size:16px\">$kd_rek5</td>
+                    <td align=\"right\"  style=\"font-size:16px\">$n_nilai_sp2d</td>
+                    <td align=\"right\" style=\"font-size:16px\">$no_bukti</td>
+                    <td align=\"center\" style=\"font-size:16px\">$kode_kegiatan</td>
+                    <td align=\"right\" style=\"font-size:16px\">$kd_rek5</td>
+                  <td align=\"right\" style=\"font-size:16px\">$n_nilai_spj</td>
+                  <td align=\"right\" style=\"font-size:16px\"></td>
+                         </tr>";
+              
+             }  
+
+        $cRet .= 
+                  "<tr>
+                     <td align=\"center\" width=\"10%\" style=\"font-size:16px\"></td>
+                      <td align=\"center\" width=\"10%\" style=\"font-size:16px\"></td>
+                       <td align=\"center\" width=\"10%\" style=\"font-size:16px\"></td>
+                        <td align=\"center\" width=\"10%\" style=\"font-size:16px\"></td>
+                         <td align=\"center\" width=\"10%\" style=\"font-size:16px\"></td>
+                          <td align=\"center\" width=\"10%\" style=\"font-size:16px\"></td>
+                           <td align=\"center\" width=\"10%\" style=\"font-size:16px\"></td>
+                            <td align=\"center\" width=\"10%\" style=\"font-size:16px\"></td>
+                             <td align=\"center\" width=\"10%\" style=\"font-size:16px\">$n_sisa_sp2d</td>
+                         </tr>";     
+     
+         
+            
+         $cRet .="      
+                  
+                 </table>"; 
+          $cRet .="<table  width=\"100%\" align=\"center\" cellspacing=\"1\" cellpadding=\"1\">
+          
+                  <tr>
+                     <td align=\"left\" width=\"10%\" style=\"font-size:16px\">1. TOTAL SP2D : $n_nilai_sp2d</td>
+                  </tr>";
+
+          $cRet .= 
+                  "<tr>
+                      <td align=\"left\" width=\"10%\" style=\"font-size:16px\">2. TOTAL SPJ : $j_jum_spj</td>
+                  </tr>";
+
+          $cRet .=         
+                  "<tr>
+                       <td align=\"left\" width=\"10%\" style=\"font-size:16px\">3. PENGEMBALIAN KAS :$j_total_kas</td>
+                  </tr>"; 
+
+           $cRet .="  
+           </table>";      
+            
+
+
+         }
+
+        if ($pilih==1) {
+          $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"0\" cellspacing=\"1\" cellpadding=\"1\"> 
+            <tr>
+                <td  width=\"10%\" align=\"left\" style=\"font-size:12px;\"><b>SKPD</b></td>
+                <td  width=\"90%\" align=\"left\" style=\"font-size:12px;\"><b>:&nbsp;$trh2->kd_skpd / $trh2->nm_skpd</b></td>
+            </tr>
+             <tr>
+                <td  width=\"10%\" align=\"left\" style=\"font-size:12px;\"><b>BULAN</b></td>
+                <td  width=\"90%\" align=\"left\" style=\"font-size:12px;\"><b>:&nbsp;$lcperiode</b></td>
+            </tr>
+      
+            <tr>
+                <td align=\"left\" style=\"font-size:12px;\">&nbsp;</td>
+                <td align=\"left\" style=\"font-size:12px;\"></td>
+            </tr>            
+            </table>";
+            
+           $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"1\" cellspacing=\"1\" cellpadding=\"1\">
+            <thead>
+                <tr>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" width=\"20%\" style=\"font-size:12px\"><b>No SP2D</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" width=\"10%\" style=\"font-size:12px\"><b>KODE KEGIATAN</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" width=\"10%\" style=\"font-size:12px\"><b>Tanggal SP2D</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" width=\"20%\" style=\"font-size:12px\"><b>KEPERLUAN</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" colspan=\"10\" width=\"30%\" style=\"font-size:12px\"><b>NILAI SP2D</b></td>                   
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" width=\"10%\" style=\"font-size:12px\"><b>NILAI SPJ</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" width=\"10%\" style=\"font-size:12px\"><b>PENGEMBALIAN KAS</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" width=\"10%\" style=\"font-size:12px\"><b>SISA LS</b></td>
+                   
+                </tr>
+                <tr>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:12px\"><b>1</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:12px\"><b>2</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:12px\"><b>3</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\"  style=\"font-size:12px\"><b>4</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" colspan=\"10\" style=\"font-size:12px\"><b>5</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:12px\"><b>6</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:12px\"><b>7</b></td>
+                     <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:12px\"><b>8</b></td>
+              
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan=\"16\" valign=\"top\" align=\"center\" style=\"font-size:12px;border-bottom:none;border-top:solid 1px black;\"></td>
+                 </tr>
+            </tfoot>
+
+           ";
+          $hasil = $this->db->query($csql3);
+          //$n_sisa_tu = 0;
+        foreach ($hasil->result() as $row){
+          $no_sp2d = $row->no_sp2d;
+          $tgl_sp2d = $row->tgl_kas;
+          $tgl_kas=$this->tukd_model->tanggal_ind($tgl_sp2d);
+          $keperluan = $row->keperluan;
+          $kd_kegiatan =  $row->kode_kegiatan;
+          $nilai = $row->nilai;
+          $n_nilai_sp2d = number_format($nilai ,0,',','.');
+          $nilai_spj = $row->n_sp2d;
+          $n_nilai_spj = number_format($nilai_spj ,0,',','.');
+          $sisa_tu = $nilai - $nilai_spj;
+          $n_sisa_tu = number_format($sisa_tu ,0,',','.');
+        
+           
+            $cRet .= "<tr>
+                           <td align=\"center\" style=\"font-size:12px\">$no_sp2d</td>
+                            <td align=\"center\" style=\"font-size:12px\">$kd_kegiatan</td>
+                    <td align=\"center\" style=\"font-size:12px\">$tgl_kas</td>
+                    <td align=\"center\" style=\"font-size:12px\">$keperluan</td>
+                    <td align=\"right\" colspan=\"10\" style=\"font-size:12px\">$n_nilai_sp2d</td>
+                    <td align=\"right\" style=\"font-size:12px\">$n_nilai_spj</td>
+                    <td align=\"center\" style=\"font-size:12px\"></td>
+                    <td align=\"right\" style=\"font-size:12px\">$n_sisa_tu</td>
+                
+                         </tr>";
+              
+            }
+
+            $csql33 = "select sum(nilai) as nilai from trhsp2d where kd_skpd='1.20.05.01' and month(tgl_kas)='$bulana'
+             and jns_spp='5'";  
+            $hasil3 = $this->db->query($csql33);
+            foreach ($hasil3->result() as $row){
+              $nilaisp2d = $row->nilai;
+              $sp2d = number_format($nilaisp2d ,0,',','.');
+        }
+            $csql333 = "SELECT SUM(a.nilai) AS spj FROM trdtransout_ppkd a INNER JOIN trhsp2d b 
+ON a.no_sp2d=b.no_sp2d WHERE MONTH(b.tgl_kas)='$bulana' AND b.jns_spp='5'";  
+            $hasil33 = $this->db->query($csql333);
+            foreach ($hasil33->result() as $row){
+              $nilaispj = $row->spj;
+              $spj = number_format($nilaispj ,0,',','.');
+        }
+            $csql3333 = "SELECT SUM(a.total) AS kas FROM trhkasin_pkd a INNER JOIN trhsp2d b
+ON a.tk=b.no_sp2d WHERE MONTH(b.tgl_kas)='$bulana' AND b.jns_spp='5' AND b.kd_skpd='1.20.05.01'";  
+            $hasil333 = $this->db->query($csql3333);
+            foreach ($hasil333->result() as $row){
+              $nilaikas = $row->kas;
+              $kas = number_format($nilaikas ,0,',','.');
+        }
+        $sisa_tu = $nilaisp2d - $nilaispj - $nilaikas;
+        $sisa_tu_n = number_format($sisa_tu ,0,',','.');           
+            
+         $cRet .="
+         <tr>
+                    <td bgcolor=\"#CCCCCC\" align=\"center\" colspan=\"4\" width=\"20%\" style=\"font-size:14px\"><b>JUMLAH TOTAL</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"right\" colspan=\"10\" width=\"30%\" style=\"font-size:13px\"><b>$sp2d</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"right\" width=\"10%\" style=\"font-size:13px\"><b>$spj</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"right\" width=\"10%\" style=\"font-size:13px\"><b>$kas</b></td>
+                    <td bgcolor=\"#CCCCCC\" align=\"right\" width=\"10%\" style=\"font-size:13px\"><b>$sisa_tu_n</b></td> 
+                </tr>      
+     
+                 </table>"; 
+
+
+         }
+
+
+
+
+                 
+
+ 
+                 
+
+    
+          $data['prev']= $cRet;
+                $this->tukd_model->_mpdf('',$cRet,5,5,5,1); 
+               //  $this->_mpdf1('',$cRet,'5','5',5,'1');   
+
+        // $data['prev']= $cRet;    
+        // switch($cetak) {        
+        // case 1;
+        //      $this->tukd_model->_mpdf('',$cRet,'5','5',5,'0');
+        // break;
+        // case 2;        
+        //     header("Cache-Control: no-cache, no-store, must-revalidate");
+        //     header("Content-Type: application/vnd.ms-excel");
+        //     header("Content-Disposition: attachment; filename= bku.xls");
+        //     $this->load->view('anggaran/rka/perkadaII', $data);
+        // break;
+        // }
+  }
+	
+  function load_sp2d() {
+    $skpd     = $this->session->userdata('kdskpd');
+   // $sql  = "SELECT id_p,rekanan,rekening,npwp FROM ms_rekanan $and group by id_p order by id_p";
+    $sql = "SELECT no_sp2d, nilai FROM trhsp2d WHERE kd_skpd = '$skpd' AND jns_spp = '5' ";
+    $query1 = $this->db->query($sql);  
+    $result = array();
+    $ii   = 0;
+    foreach($query1->result_array() as $resulte){
+      $result[] = array(
+        'id'    => $ii,
+        'no_sp2d'  => $resulte['no_sp2d'],
+        'nilai'  => $resulte['nilai']
+       
+      );
+      $ii++;
+    }
+
+    echo json_encode($result);
+
+}
+
+
+	  
+
+	
+}
+
+?>	

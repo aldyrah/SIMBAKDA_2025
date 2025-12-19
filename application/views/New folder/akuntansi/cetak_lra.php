@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>easyui/demo/demo.css">
+	<script type="text/javascript" src="<?php echo base_url(); ?>easyui/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>easyui/jquery.edatagrid.js"></script>
+    
+    <link href="<?php echo base_url(); ?>easyui/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="<?php echo base_url(); ?>easyui/jquery-ui.min.js"></script>
+	 <script src="<?php echo base_url(); ?>assets/sweetalert/lib/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/sweetalert/lib/sweet-alert.css">
+  <style>    
+    #tagih {
+        position: relative;
+        width: 922px;
+        height: 100px;
+        padding: 0.4em;
+    }  
+    </style>
+    <script type="text/javascript"> 
+    var bln='';
+	var rec='';
+	var kdrek5='';
+	var nbln='';
+	var lasdate='';
+	var cekit=0;
+
+    
+     $(document).ready(function() {
+            $("#accordion").accordion();            
+            $( "#dialog-modal" ).dialog({
+                height: 100,
+                width: 922            
+            }); 
+
+			$('#bulan').combogrid({  
+			   panelWidth:120,
+			   panelHeight:300,  
+			   idField:'bln',  
+			   textField:'nm_bulan',  
+			   mode:'remote',
+			   url:'<?php echo base_url(); ?>index.php/rka/bulan',  
+			   columns:[[ 
+				   {field:'nm_bulan',title:'Nama Bulan',width:100} 
+			   ]],
+			   onSelect:function(rowIndex,rowData){
+					bln = rowData.bln;
+					nbln= rowData.nm_bulan;
+					apbd(bln);
+					var today = new Date();
+					var lastOfMonth = new Date(today.getFullYear(),bln, 0);
+					lasdate= lastOfMonth.getDate();
+				}   
+		   
+		   });
+
+		    cek_mon();
+        });
+
+		
+function cek_mon(){
+	var d = '<?php echo date('m');?>';
+	if (d <=6)
+	{
+		 $("#awal").attr("checked",true);
+	}else{
+		$("#ubah").attr("checked",true);
+	}
+}
+
+function AddItems(isi,pesan){
+		var mySel = document.getElementById("isidata"); 
+		var myOption; 
+
+		myOption = document.createElement("Option"); 
+		myOption.text = isi; 
+		myOption.value = isi; 
+		if(pesan =='0'){
+			myOption.style = 'color:white;font-family:courier new;'; 
+		}else if(pesan=='1'){
+			myOption.style = 'color:red;font-family:courier new;'; 			
+		}else if(pesan=='2'){
+			myOption.style = 'color:#05E405;font-family:courier new;font-size:16px;';
+		}
+		mySel.add(myOption);			
+		bawah();
+	}
+
+	function bawah() {
+		var objDiv = document.getElementById("isidata");
+		objDiv.scrollTop = objDiv.scrollHeight;
+		return false;
+	}
+	
+	function record(bln){	
+			$(document).ready(function(){
+				$.ajax({
+					type: "POST",
+					url: '<?php echo base_url(); ?>/index.php/akuntansi/hitrecord',
+					dataType:"json",
+					success:function(data){
+						rec=data.jumlah;
+						isi_list(rec,bln);	
+						//alert(rec);
+					}
+				});
+			});  
+		}
+
+		function isi_list(rec,bln){
+			if (rec>0){
+				var a=0;
+				for (var i=1;i<=rec ;i++ )
+				{
+					  setTimeout(function(){
+							ambil_baris(a,bln,rec);
+							a++;
+					  },100*i);
+				}
+			}else{
+				alert('Data Tidak Ditemukan');
+			}
+		}
+
+	function ambil_baris(cbaris,bln,rec){
+			var cek=document.getElementById('awal').checked;
+		    var cek1=document.getElementById('ubah').checked;
+			if(cek==false){cek=0;}else{cek=1;}
+			if(cek1==false){cek1=0;}else{cek1=1;}
+			var alamat='<?php echo base_url(); ?>/index.php/akuntansi/proses_mapping_lra_bulan';
+			$(document).ready(function(){
+				$.ajax({
+					type: "POST",
+					url: alamat,
+					data: ({baris:cbaris,bulan:bln,ccek:cek}),
+					dataType:"json",
+					success:function(data){
+							AddItems(data.isi,data.pesan);
+							if (rec==data.baris){
+								AddItems('Proses Perhitungan Realisasi Anggaran Bulan '+nbln+' Selesai ','2');
+								$('#cetak0').linkbutton('enable');
+								$('#cetak1').linkbutton('enable');
+								$('#cetak2').linkbutton('enable');
+								$('#cetak3').linkbutton('enable');
+								document.getElementById('load').style.visibility='hidden';
+								swal("Good job!", "Calculate Transaction Finish !!", "success");
+							}
+							 
+					}
+				});
+			});        		
+		
+		}
+    
+	function apbd(bln){
+			document.getElementById('isidata').innerHTML = "";
+			AddItems('Proses Perhitungan Realisasi Anggaran Bulan '+nbln,'2');
+			document.getElementById('load').style.visibility='visible';
+			$('#cetak0').linkbutton('disable');
+			$('#cetak1').linkbutton('disable');
+			$('#cetak2').linkbutton('disable');
+			$('#cetak3').linkbutton('disable');
+			record(bln);
+	}
+    
+
+    function cetak($ctk)
+        {
+			var bulan = bln;
+			//alert(bulan);
+            var cetak =$ctk;           	
+			var url    = "<?php echo site_url(); ?>/akuntansi/cetak_lra_bulan";	  
+			window.open(url+'/'+cetak+'/'+bulan+'/'+lasdate+'/'+1, '_blank');
+			window.focus();
+        }
+  
+     
+    function valid_com(){
+		var cek=document.getElementById('awal').checked;
+		var cek1=document.getElementById('ubah').checked;
+		if(cek==true && cek1 == false){
+			$("#awal").attr("checked",true);
+			$("#ubah").attr("checked",false);
+		}else if(cek1==true && cek==false){
+		    $("#awal").attr("checked",false);
+			$("#ubah").attr("checked",true);
+		}else if(cek1==false && cek==false){
+		    $("#awal").attr("checked",false);
+			$("#ubah").attr("checked",true);
+		}else{
+		    $("#awal").attr("checked",false);
+			$("#ubah").attr("checked",false);
+		}
+	
+	} 
+        
+    
+    </script>
+
+    <STYLE TYPE="text/css"> 
+		 input.right{ 
+         text-align:right; 
+         } 
+	</STYLE> 
+
+</head>
+<body>
+
+<div id="content">
+
+
+
+<h3>LAPORAN REALISASI ANGGARAN</h3>       
+<div id="accordion">
+    
+    <p align="right">         
+        <table id="sp2d" title="Proses Perhitungan LRA" style="width:925px;height:400px;" >          
+        <tr>
+			<td colspan="3" style="border-bottom: double 1px red;"><i>Proses perhitungan realisasi akan memakan waktu &plusmn; 15 Menit !!</i></td>
+		</tr>
+		<tr>
+			<td colspan="3"><input type="checkbox" id="awal" onchange="javascript:valid_com();"/>&nbsp;&nbsp;Penyusunan&nbsp;&nbsp;<input type="checkbox" id="ubah" onchange="javascript:valid_com();"/>&nbsp;&nbsp;Perubahan</td>
+		</tr>
+		<tr>
+                            <td width="10%">BULAN</td>
+                            <td width="1%">:</td>
+                            <td width="79%"><input id="bulan" name="bulan" style="width: 100px;" />
+                            </td>
+		</tr>
+		
+		<tr >
+			<td colspan="3">
+			<a id ="cetak0" class="easyui-linkbutton" iconCls="icon-print" plain="true" onclick="javascript:cetak(0);">Cetak Layar</a>
+			<a id ="cetak1" class="easyui-linkbutton" iconCls="icon-pdf" plain="true" onclick="javascript:cetak(1);">Cetak PDF</a>
+            <a id ="cetak2" class="easyui-linkbutton" iconCls="icon-excel" plain="true" onclick="javascript:cetak(2);">Cetak excel</a>
+            <a id ="cetak3"class="easyui-linkbutton" iconCls="icon-word" plain="true" onclick="javascript:cetak(3);">Cetak word</a></td>
+		</tr>
+		
+		<tr height="70%" >
+			<td colspan="3" align="center" style="visibility:hidden" >	
+			<DIV id="load" > <b>Sedang Proses Penghitungan Realisasi</b><IMG src="<?php echo base_url(); ?>assets/images/loading14.gif" WIDTH="800" HEIGHT="25" BORDER="0" ALT=""></DIV></td>
+		</tr>
+		
+        </table>   
+		<div class="bs-example h-default-themed">
+	
+		<select name="isidata" id="isidata" multiple="multiple" style="width:100%;height:230px;background-color:#000000;border:0px" disabled>
+		</select>		
+		
+		
+		</div>
+    </p> 
+    
+
+</div>
+
+</div>
+
+ 	
+</body>
+
+</html>

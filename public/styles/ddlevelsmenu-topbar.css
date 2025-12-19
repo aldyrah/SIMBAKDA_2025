@@ -1,0 +1,57 @@
+/* ######### Matt Black Strip Main Menu Bar CSS ######### */
+
+.mattblackmenu ul{
+margin: 0;
+padding-left: 10px;
+font: bold 12px Arial;
+list-style-type: none;
+/*border: 1px solid #44921f ;*/
+background: rgb(56,224,0); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(56,224,0,1) 0%, rgba(30,142,0,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(56,224,0,1)), color-stop(100%,rgba(30,142,0,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(56,224,0,1) 0%,rgba(30,142,0,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(56,224,0,1) 0%,rgba(30,142,0,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(56,224,0,1) 0%,rgba(30,142,0,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(56,224,0,1) 0%,rgba(30,142,0,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#38e000', endColorstr='#1e8e00',GradientType=0 ); /* IE6-9 */
+border-left:none;
+border-right:none;
+overflow: hidden;
+width: auto;
+
+}
+
+.mattblackmenu li{
+display: inline;
+margin: 0;
+}
+
+.mattblackmenu li a{
+float: left;
+display: block;
+text-decoration: none;
+margin: 0;
+padding: 9px 12px; /*padding inside each tab*/
+border-right: 1px solid #009900; /*right divider between tabs*/
+color:#fff;
+font-weight:bold;
+/*background: #414141;*/
+}
+
+.mattblackmenu li a:visited{
+color:#fff;
+}
+
+.mattblackmenu li a:hover{
+background:#F7F7F7; /*background of tabs for hover state */
+color:#666666;
+text-shadow: 0px 0px 0px #ffffff;
+filter: dropshadow(color=#ffffff, offx=0, offy=0);
+}
+
+.mattblackmenu a.selected{
+background:#F7F7F7; /*background of tabs for hover state */
+color:#666666;
+text-shadow: 0px 0px 0px #ffffff;
+filter: dropshadow(color=#ffffff, offx=0, offy=0);
+}

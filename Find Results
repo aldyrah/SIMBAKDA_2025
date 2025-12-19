@@ -1,0 +1,20 @@
+Searching 4140 files for "SIMBAKDA 2024"
+
+C:\xampp\htdocs\simbakda_2024\application\views\index.php:
+  105  
+  106  	<div id="boxfoot">
+  107: 	<p style="color:white;"> SIMBAKDA 2024 &copy;</p>
+  108  	</div>
+  109    </div>
+
+C:\xampp\htdocs\simbakda_2024\application\views\login.php:
+    8            <span class="login100-form-title p-b-43">
+    9            <img src="<?php echo base_url();?>assets/images/icon.png" width="50px" height="50px" /><br>
+   10:             LOGIN SIMBAKDA 2024
+   11            </span>
+   12            <div class="wrap-input100 validate-input" data-validate = "Isi Username Terlebih Dahulu">
+
+C:\xampp\htdocs\simbakda_2024\data\db_simakda_siadinda_2016 20160901 1643.sql:
+    File too large, skipping
+
+2 matches across 2 files
