@@ -152,6 +152,110 @@ public function cetak_alatmesinopd() {
         $this->template->load('index','laporan/laporan_eca/lap_eca_dh',$data);
         } 
     }
+
+	public function CetakLampiranIV111() {
+// ADIT LAPORAN PENGGUNAAN
+    
+
+    if($this->auth->is_logged_in() == false){
+        redirect(site_url().'/welcome/login');
+    }
+         
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+  
+    $laporan = $this->input->get('laporan');
+
+    $tahun   = $this->input->get('tahun');
+    $tgl     = $this->input->get('tgl');
+    $inpBulan  = $this->input->get('bulan');
+    $laporan = $this->input->get('laporan');
+    $date    = new DateTime($tgl); // <--- MENGAMBIL FORMAT TGL DARI INPUT TANGGAL CETAK
+    $hari    = $date->format('d'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL TANGGAL SAJA -> 31
+    $dBulan  = $date->format('m'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA BULAN SAJA -> 12
+    $jenis = $this->input->get('jenis');
+    $dTahun  = $date->format(20 . 'y'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA TAHUN SAJA -> 25 (20 . 25) = 2025
+
+    $inputBulan = $this->db                        
+    ->get_where('bulan', ['n_bulan' => $inpBulan])
+    ->row('nama_bulan') ?? '-';                    
+
+
+    $bulan = $this->db
+    ->get_where('bulan', ['n_bulan' => $dBulan])
+    ->row('nama_bulan') ?? '-';
+
+    $cRet = $this->StructureLampiranIV111($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis);
+
+    // 🔹 Bersihkan buffer (WAJIB untuk PDF)
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+  switch ($jenis) {
+
+        case 'pdf':
+
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
+            require_once APPPATH . '3rdparty/mpdf/mpdf.php';
+
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A3-L',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 15
+            ]);
+
+            $mpdf->SetTitle("LAMPIRAN IV.1.1.1");
+            $mpdf->WriteHTML($cRet);
+            $mpdf->Output('Lampiran'.$laporan.'.pdf', 'I');
+            exit;
+
+        break;
+
+
+        case 'excel':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".xls");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'word':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-word");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".doc");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'html':
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        default:
+            show_error('Format cetak tidak dikenal');
+        break;
+         }
+        } 
 	
     function cetak_perolehan()
     {
