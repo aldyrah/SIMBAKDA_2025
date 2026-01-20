@@ -500,7 +500,7 @@ function opt2(val){
 
 
 <div id="content1"> 
-    <h3 align="center"><b>CETAK LAPORAN PENERIMAAN BMD<br>
+    <h3 align="center"><b>CETAK LAPORAN PENGELUARAN BMD<br>
 INTERNAL PENGGUNA BARANG</b></h3>
     <fieldset>
      <table align="center" style="width:100%;" border="0">
