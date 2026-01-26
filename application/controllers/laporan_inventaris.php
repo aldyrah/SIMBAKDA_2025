@@ -15176,89 +15176,61 @@ $i++;
                     </tr>
                 </table>";
         $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"1\" cellspacing=\"1\" cellpadding=\"4\">
-            <thead>
-            <tr>
-                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">No</td>
-                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Kode Barang</td>
-                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Kode Sub Barang</td>
-                    <td rowspan=\"2\" width=\"8%\" align=\"center\" bgcolor=\"#CCCCCC\">Nama Barang</td>
-                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\">No. Register</td>
-                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\">Merek/Tipe</td>
-                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Ukuran/<br>CC</td>
-                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Bahan</td>
+             <thead>
+        <tr>
+            <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">No</td>
+            <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Kode Barang</td>
+            <td rowspan=\"2\" width=\"8%\" align=\"center\" bgcolor=\"#CCCCCC\">Nama Barang</td>
+            <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\">No. Register</td>
+            <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\">Merek/Tipe</td>
+            <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Ukuran/<br>CC</td>
+            <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Bahan</td>
 
-                    <td colspan=\"2\" width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\">Quantity</td>
+            <td colspan=\"2\" width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\">Quantity</td>
 
-                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Tahun</td>
+            <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Tahun</td>
 
-                    <td colspan=\"5\" width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\">Nomor</td>
+            <td colspan=\"5\" width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\">Nomor</td>
 
-                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\">Asal Usul<br>Perolehan</td>
-                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Kondisi</td>
-                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\">Harga</td>
-                    <td rowspan=\"2\" width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\">Keterangan</td>
+            <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\">Asal Usul<br>Perolehan</td>
+            <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Kondisi</td>
+            <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\">Harga</td>
+            <td rowspan=\"2\" width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\">Keterangan</td>
+        </tr>
 
-                    <td colspan=\"5\" width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\">Penyusutan Tahun ...</td>
+        <tr>
+            <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Jumlah Barang</td>
+            <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Harga Satuan</td>
 
-                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\">Masa Manfaat Telah Dilewat</td>
+            <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Pabrik</td>
+            <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Rangka</td>
+            <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Mesin</td>
+            <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Polisi</td>
+            <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">BPKB</td>
+        </tr>
 
-                    <td colspan=\"3\" width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\">Penyusutan Tahun ...</td>
-                </tr>
-
-                <tr>
-                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Jumlah Barang</td>
-                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\">Harga Satuan</td>
-
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Pabrik</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Rangka</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Mesin</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Polisi</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">BPKB</td>
-
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Masa Manfaat</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Masa Manfaat Telah Dilewati</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Penyusutan Tahun ...</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Akumulasi Penyusutan Tahun ...</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Nilai Buku Per 31 Desember 2024</td>
-
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Penyusutan Tahun ...</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Akumulasi Penyusutan Tahun ...</td>
-                    <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\">Nilai Buku Per 31 Desember ...</td>
-                </tr>
-            
-            
-            <tr>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">1</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">2</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">3</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">4</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">5</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">6</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">7</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">8</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">9</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">10</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">11</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">12</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">13</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">14</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">15</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">16</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">17</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">18</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">19</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">20</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">21</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">22</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">23</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">24</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">25</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">26</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">27</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">28</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">29</td>
-            </tr>
-             </thead>
+        <tr>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">1</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">2</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">3</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">4</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">5</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">6</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">7</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">8</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">9</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">10</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">11</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">12</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">13</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">14</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">15</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">16</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">17</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">18</td>
+            <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">19</td>
+        </tr>
+    </thead>
              
                 ";
             
@@ -15418,11 +15390,10 @@ $i++;
                         }
                     }
                     $cRet .="<tr>
-                                <td bgcolor=\"#CCCCCC\" colspan=\"18\" align=\"center\" width =\"5%\" style=\"font-size:11px\"><b>Jumlah</b></td>
+                                <td bgcolor=\"#CCCCCC\" colspan=\"17\" align=\"center\" width =\"5%\" style=\"font-size:11px\"><b>Jumlah</b></td>
                                 <td bgcolor=\"#CCCCCC\" align=\"right\" style=\"font-size:11px\"><b>".number_format($totalsel,'0',',','.')."</b></td>
-                                <td bgcolor=\"#CCCCCC\" align=\"left\" style=\"font-size:11px\"></td>
-                                <td bgcolor=\"#CCCCCC\" colspan=\"10\" align=\"left\" style=\"font-size:11px\"></td>
-                            </tr>";
+                                <td bgcolor=\"#CCCCCC\" align=\"right\" style=\"font-size:11px\"></td>
+                             </tr>";
 // ".number_format($lctotal,'0',',','.')."            
          $cRet .="</table>"; 
          $zz=0;
