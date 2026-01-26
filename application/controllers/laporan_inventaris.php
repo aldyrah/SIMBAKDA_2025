@@ -16224,82 +16224,85 @@ $i++;
                     </tr>
                 </table>";
         $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"1\" cellspacing=\"1\" cellpadding=\"4\">
-            <thead>
-            <tr>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">No</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Kode Barang</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"15%\" style=\"font-size:12px\">Nama Barang</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">No. Register</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Merek/Tipe</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Ukuran/<br>CC</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Bahan</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" colspan=\"2\" width=\"25%\" style=\"font-size:12px\">Quantity</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Tahun</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" colspan=\"5\" width=\"25%\" style=\"font-size:12px\">Nomor</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"15%\" style=\"font-size:12px\">Asal Usul<br>Perolehan</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Harga</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Kondisi</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"13%\" style=\"font-size:12px\">Keterangan</td>
-                <td colspan=\"5\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">PENYUSUTAN TAHUN $tahunlalu</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Masa Manfaat Telah Dilewat</td>
-                <td colspan=\"3\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">PENYUSUTAN TAHUN $tahunn</td>
-            </tr>
+                <thead>
+                <tr>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"3%\" style=\"font-size:12px\">No</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Kode Barang</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Kode Sub Barang</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"9%\" style=\"font-size:12px\">Nama Barang</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">No. Register</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"6%\" style=\"font-size:12px\">Merek/Tipe</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Ukuran/<br>CC</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Bahan</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" colspan=\"2\" width=\"7%\" style=\"font-size:12px\">Quantity</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"4%\" style=\"font-size:12px\">Tahun</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" colspan=\"5\" width=\"17%\" style=\"font-size:12px\">Nomor</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"9%\" style=\"font-size:12px\">Asal Usul<br>Perolehan</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Harga</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Kondisi</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"8%\" style=\"font-size:12px\">Keterangan</td>
+                    <td colspan=\"5\" align=\"center\" bgcolor=\"#CCCCCC\" width=\"17%\" style=\"font-size:12px;\">PENYUSUTAN TAHUN $tahunlalu</td>
+                    <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" width=\"6%\" style=\"font-size:12px;\">Masa Manfaat Telah Dilewat</td>
+                    <td colspan=\"3\" align=\"center\" bgcolor=\"#CCCCCC\" width=\"11%\" style=\"font-size:12px;\">PENYUSUTAN TAHUN $tahunn</td>
+                </tr>
             
-            <tr>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:12px\">Jumlah Barang</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:12px\">Harga Satuan</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:12px\">Pabrik</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:12px\">Rangka</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:12px\">Mesin</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:12px\">Polisi</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:12px\">BPKB</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Masa Manfaat</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Masa Manfaat Telah Dilewati</td>
-                
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Penyusutan Tahun $tahunlalu</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Akumulasi Penyusutan Tahun $tahunlalu</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Nilai Buku Per 31 Desember $tahunlalu</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Penyusutan Tahun $tahunn</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Akumulasi Penyusutan Tahun $tahunn</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Nilai Buku Per 31 Desember $tahunn</td>
-            </tr>
+                <tr>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.5%\" style=\"font-size:12px\">Jumlah Barang</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.5%\" style=\"font-size:12px\">Harga Satuan</td>
             
-            <tr>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">1</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">2</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"15%\" style=\"font-size:10px\">3</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">4</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">5</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">6</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">7</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">8</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">9</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">10</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">11</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">12</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">13</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"15%\" style=\"font-size:10px\">14</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">15</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"2%\" style=\"font-size:10px\">16</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">17</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">18</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">19</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">20</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">21</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">22</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">23</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">24</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">25</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">26</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">27</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">28</td>
-            </tr>
-             </thead>
-             
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px\">Pabrik</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px\">Rangka</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px\">Mesin</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px\">Polisi</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px\">BPKB</td>
+            
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px;\">Masa Manfaat</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px;\">Masa Manfaat Telah Dilewati</td>
+            
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px;\">Penyusutan Tahun $tahunlalu</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px;\">Akumulasi Penyusutan Tahun $tahunlalu</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:12px;\">Nilai Buku Per 31 Desember $tahunlalu</td>
+            
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.7%\" style=\"font-size:12px;\">Penyusutan Tahun $tahunn</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.7%\" style=\"font-size:12px;\">Akumulasi Penyusutan Tahun $tahunn</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.7%\" style=\"font-size:12px;\">Nilai Buku Per 31 Desember $tahunn</td>
+                </tr>
+            
+                <tr>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3%\" style=\"font-size:10px\">1</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">2</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">3</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"9%\" style=\"font-size:10px\">4</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">5</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"6%\" style=\"font-size:10px\">6</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">7</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:10px\">8</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.5%\" style=\"font-size:10px\">9</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.5%\" style=\"font-size:10px\">10</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"4%\" style=\"font-size:10px\">11</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">12</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">13</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">14</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">15</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">16</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">17</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">18</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">19</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">20</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">21</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">22</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.4%\" style=\"font-size:10px\">23</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.7%\" style=\"font-size:10px\">24</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.7%\" style=\"font-size:10px\">25</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.7%\" style=\"font-size:10px\">26</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.7%\" style=\"font-size:10px\">27</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.7%\" style=\"font-size:10px\">28</td>
+                    <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"3.7%\" style=\"font-size:10px\">29</td>
+                </tr>
+            </thead>
                 ";
             
             if($blnthn=='01'){
-                $tglreg     = "tgl_reg<='$last'";
                 $tglmutasi  = "tgl_mutasi>='$last'";
                 $tglpindah  = "tgl_pindah>='$last'";
                 $tglhapus   = "tgl_hapus>='$last'";
@@ -16657,7 +16660,7 @@ select * from trsusut a where $tglreg group by kd_brg,keterangan order by tahun"
                     // }
                 }
                     $cRet .="<tr>
-                                <td bgcolor=\"#CCCCCC\" colspan=\"16\" align=\"center\" width =\"2%\" style=\"font-size:11px\"><b>Jumlah</b></td>
+                                <td bgcolor=\"#CCCCCC\" colspan=\"17\" align=\"center\" width =\"2%\" style=\"font-size:11px\"><b>Jumlah</b></td>
                                 <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b>".number_format($totalsel,2,',','.')."</b></td>
                                 <td bgcolor=\"#CCCCCC\" colspan=\"2\" width =\"5%\" align=\"left\" style=\"font-size:11px\"></td>
                                 <td bgcolor=\"#CCCCCC\" align=\"right\" style=\"font-size:11px\"><b></b></td>
@@ -18394,81 +18397,86 @@ select * from trsusut a where $tglreg group by kd_brg,keterangan order by tahun"
                         <td align=\"left\" style=\"font-size:13px;\">: $nmjenis</td>
                     </tr>
                 </table>";
-        $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"1\" cellspacing=\"1\" cellpadding=\"1\">
+        $cRet .="<table style=\"border-collapse:collapse;\" width=\"200%\" align=\"center\" border=\"1\" cellspacing=\"1\" cellpadding=\"1\">
             <thead>
-            <tr>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">No</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Jenis Barang<br>Nama Barang</td>
-                <td colspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Letak/Lokasi<br>Alamat</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Luas/<br>Lantai<br>(m2)</td>
-                <td colspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Konstruksi Gedung/<br>Bangunan</td>
-                <td colspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Dokumen Gedung</td>
-
-                
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Luas<br>(m2)</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Status<br>Tanah</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor Kode<br>Tanah</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Tahun Perolehan</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Asal Usul</td>
-
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Harga</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kondisi<br/>(B,KB,RB)</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Keterangan</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat Telah Dilewati</td>
-                <td colspan=\"3\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">PENYUSUTAN Tahun $tahunlalu</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Masa Manfaat Telah Dilewati</td>
-                <td colspan=\"3\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">PENYUSUTAN Tahun $tahunn</td>
-
-            </tr>
-            <tr>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kode Barang</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Register</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Bertingkat/<br>Tidak</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Beton/<br>Tidak</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Tanggal</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor</td>
-                
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Penyusutan Tahun $tahunlalu</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Akumulasi Penyusutan $tahunlalu</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Nilai Buku Per 31 Desember $tahunlalu</td>
-
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Penyusutan Tahun $tahunn</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Akumulasi Penyusutan $tahunn</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Nilai Buku Per 31 Desember $tahunn</td>
-                
-            </tr>            
-            <tr>
-                <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">1</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">2</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">3</td>
-                <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">4</td>
-                <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">5</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">6</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">7</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">8</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">9</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">10</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">11</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">12</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">13</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">14</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">15</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">16</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">17</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">18</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">19</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">20</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">21 = 16 / 19</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">22 = 21 * 20</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">23 = 16 - 22</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">24</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">25 = 16 / 19</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">26 = 25 * 24</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">27 = 16 - 26</td>
-            </tr>
+                <tr>
+                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">No</td>
+                    <td rowspan=\"2\" width=\"7%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Jenis Barang<br>Nama Barang</td>
+                    <td colspan=\"3\" width=\"8%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor</td>
+                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Letak/Lokasi<br>Alamat</td>
+                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Luas/<br>Lantai<br>(m2)</td>
+                    <td colspan=\"2\" width=\"8%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Konstruksi Gedung/<br>Bangunan</td>
+                    <td colspan=\"2\" width=\"8%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Dokumen Gedung</td>
+            
+                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Luas<br>(m2)</td>
+                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Status<br>Tanah</td>
+                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor Kode<br>Tanah</td>
+                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Tahun Perolehan</td>
+                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Asal Usul</td>
+            
+                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Harga</td>
+                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kondisi<br/>(B,KB,RB)</td>
+                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Keterangan</td>
+                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat</td>
+                    <td rowspan=\"2\" width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat Telah Dilewati</td>
+            
+                    <td colspan=\"3\" width=\"11%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">PENYUSUTAN Tahun $tahunlalu</td>
+                    <td rowspan=\"2\" width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat Telah Dilewati</td>
+                    <td colspan=\"3\" width=\"9%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">PENYUSUTAN Tahun $tahunn</td>
+                </tr>
+            
+                <tr>
+                    <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kode Barang</td>
+                    <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kode<br>Sub Barang</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Register</td>
+            
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Bertingkat/<br>Tidak</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Beton/<br>Tidak</td>
+            
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Tanggal</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor</td>
+            
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Penyusutan Tahun $tahunlalu</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Akumulasi Penyusutan $tahunlalu</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nilai Buku Per 31 Desember $tahunlalu</td>
+            
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Penyusutan Tahun $tahunn</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Akumulasi Penyusutan $tahunn</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nilai Buku Per 31 Desember $tahunn</td>
+                </tr>
+            
+                <tr>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">1</td>
+                    <td width=\"7%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">2</td>
+                    <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">3</td>
+                    <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">3a</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">4</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">5</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">6</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">7</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">8</td>
+                    <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">9</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">10</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">11</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">12</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">13</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">14</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">15</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">16</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">17</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">18</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">19</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">20</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">21 = 16 / 19</td>
+                    <td width=\"4%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">22 = 21 * 20</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">23 = 16 - 22</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">24</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">25 = 16 / 19</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">26 = 25 * 24</td>
+                    <td width=\"3%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">27 = 16 - 26</td>
+                </tr>
             </thead>
+
             ";
             if($blnthn=='01'){
                 $tglreg     = "tgl_reg<='$last'";
@@ -18914,6 +18922,7 @@ select * from trsusut a where $tglreg group by kd_brg,keterangan order by tahun"
                                     <td align=\"center\" style=\"font-size:11px\">$i</td>
                                     <td align=\"left\" style=\"font-size:11px\">$nm_brg</td>
                                     <td align=\"left\" style=\"font-size:11px\">$kd_brg</td>
+                                    <td align=\"left\" style=\"font-size:11px\">$kd_brg</td>
                                     <td align=\"center\" style=\"font-size:11px\">$no_reg</td>
                                     <td align=\"center\" style=\"font-size:11px\">$alamat</td>
                                     <td align=\"left\" style=\"font-size:11px\">$luas_lantai</td>
@@ -18987,14 +18996,12 @@ select * from trsusut a where $tglreg group by kd_brg,keterangan order by tahun"
                                     <td align=\"right\" style=\"font-size:11px;\">".number_format($penyusutanini,2,',','.')."</td>
                                     <td align=\"right\" style=\"font-size:11px;\">".number_format($akumini,2,',','.')."</td>
                                     <td align=\"right\" style=\"font-size:11px;\">".number_format($nbini,2,',','.')."</td>
-                                    
-                                    
                                 </tr>";
                         // }
                     }
                 }
                     $cRet .="<tr>
-                                <td colspan=\"15\" bgcolor=\"#CCCCCC\" align=\"center\" width =\"2%\" style=\"font-size:11px\"><b>Jumlah</b></td>
+                                <td colspan=\"16\" bgcolor=\"#CCCCCC\" align=\"center\" width =\"2%\" style=\"font-size:11px\"><b>Jumlah</b></td>
                                 <td bgcolor=\"#CCCCCC\" align=\"right\" style=\"font-size:11px\"><b>".number_format($totalsel,2,',','.')."</b></td>
                                 <td bgcolor=\"#CCCCCC\" colspan=\"2\" width =\"5%\" align=\"left\" style=\"font-size:11px\"></td>
                                 <td bgcolor=\"#CCCCCC\" align=\"right\" style=\"font-size:11px\"><b></b></td>
@@ -21930,77 +21937,92 @@ select * from trsusut a where $tglreg group by kd_brg,keterangan order by tahun"
                         <td align=\"left\" style=\"font-size:13px;\">: $nmjenis</td>
                     </tr>
                 </table>";
-        $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"1\" cellspacing=\"1\" cellpadding=\"1\">
-            <thead>
+        $cRet .="<table style=\"border-collapse:collapse;table-layout:fixed;\" width=\"200%\" align=\"center\" border=\"1\" cellspacing=\"1\" cellpadding=\"1\">
+                <thead>
+                    <tr>
+                        <td rowspan=\"2\" width=\"8%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">No</td>
+                        <td rowspan=\"2\" width=\"16%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Jenis Barang/<br>Nama Barang</td>
             
-            <tr>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">No</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Jenis Barang/<br>Nama Barang</td>
-                <td colspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Konstruksi</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Panjang<br>(Km)</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Lebar<br>(M)</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Luas<br>(m2)</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Letak/<br>Lokasi</td>
-                <td colspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Dokumen</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Status<br>Tanah</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor Kode<br>Tanah</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Asal Usul</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Harga</td>
-                
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kondisi</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Keterangan</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat Telah Dilewati</td>
+                        <td colspan=\"3\" width=\"18%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor</td>
+            
+                        <td rowspan=\"2\" width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Konstruksi</td>
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Panjang<br>(Km)</td>
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Lebar<br>(M)</td>
+                        <td rowspan=\"2\" width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Luas<br>(m2)</td>
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Letak/<br>Lokasi</td>
+            
+                        <td colspan=\"2\" width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Dokumen</td>
+            
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Status<br>Tanah</td>
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor Kode<br>Tanah</td>
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Asal Usul</td>
+                        <td rowspan=\"2\" width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Harga</td>
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kondisi</td>
+                        <td rowspan=\"2\" width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Keterangan</td>
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat</td>
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat Telah Dilewati</td>
+            
+                        <td colspan=\"3\" width=\"18%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">PENYUSUTAN Tahun $tahunlalu</td>
+            
+                        <td rowspan=\"2\" width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat</td>
+            
+                        <td colspan=\"3\" width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">PENYUSUTAN Tahun $tahunn</td>
+                    </tr>
+            
+                    <tr>
+                        <td width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kode Barang</td>
+                        <td width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kode<br>Sub Barang</td>
+                        <td width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Register</td>
+            
+                        <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Tanggal</td>
+                        <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor</td>
+            
+                        <td width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Penyusutan Tahun $tahunlalu</td>
+                        <td width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Akumulasi Tahun $tahunlalu</td>
+                        <td width=\"6%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nilai Buku Per 31 Desember $tahunlalu</td>
+            
+                        <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Penyusutan Tahun $tahunn</td>
+                        <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Akumulasi Tahun $tahunn</td>
+                        <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nilai Buku Per 31 Desember $tahunn</td>
+                    </tr>
+            
+                    <tr>
+                        <td width=\"8%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">1</td>
+                        <td width=\"16%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">2</td>
+            
+                        <td width=\"6%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">3</td>
+                        <td width=\"6%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">3a</td>
+                        <td width=\"6%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">4</td>
+            
+                        <td width=\"6%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">5</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">6</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">7</td>
+                        <td width=\"6%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">8</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">9</td>
+            
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">10</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">11</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">12</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">13</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">14</td>
+            
+                        <td width=\"6%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">15</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">16</td>
+                        <td width=\"6%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">17</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">18</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">19</td>
+            
+                        <td width=\"6%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">20 = 18 + 19</td>
+                        <td width=\"6%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">21 = 15 - 20</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">22</td>
+            
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">23</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">24</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">25</td>
+                        <td width=\"5%\"  align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">26</td>
+                    </tr>
+                </thead>
 
-                <td colspan=\"3\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">PENYUSUTAN Tahun $tahunlalu</td>
-                <td rowspan=\"2\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Masa Manfaat</td>
-                <td colspan=\"3\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">PENYUSUTAN Tahun $tahunn</td>
-                
-            </tr>
-            <tr>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Kode Barang</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Register</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Tanggal</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px\">Nomor</td>
-                
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Penyusutan Tahun $tahunlalu</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Akumulasi Tahun $tahunlalu</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Nilai Buku Per 31 Desember $tahunlalu</td>
-
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Penyusutan Tahun $tahunn</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Akumulasi Tahun $tahunn</td>
-                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:12px;\">Nilai Buku Per 31 Desember $tahunn</td>
-            </tr>
-            <tr>
-                <td width=\"2%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">1</td>
-                <td width=\"12%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">2</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">3</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">4</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">5</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">6</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">7</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">8</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">9</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">10</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">11</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">12</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">13</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">14</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">15</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">16</td>
-                <td width=\"5%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">17</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">18</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">19</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">20 = 18 + 19</td>
-                <td width=\"10%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">21 = 15 - 20</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">22</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">23</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">24</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">25</td>
-                <td width=\"15%\" align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px;\">26</td>
-            </tr>
-            </thead>
             ";
             if($blnthn=='01'){
                 $tglreg     = "tgl_reg<='$last'";
@@ -22447,6 +22469,7 @@ select * from trsusut a where $tglreg group by kd_brg,keterangan order by tahun"
                                     <td align=\"center\" style=\"font-size:11px\">$i</td>
                                     <td align=\"left\" style=\"font-size:11px\">$nm_brg</td>
                                     <td align=\"left\" style=\"font-size:11px\">$kd_brg</td>
+                                    <td align=\"left\" style=\"font-size:11px\">$kd_brg</td>
                                     <td align=\"left\" style=\"font-size:11px\">$no_reg</td>
                                     <td align=\"left\" style=\"font-size:11px\">$konstruksi</td>
                                     <td align=\"right\" style=\"font-size:11px\">$panjang</td>
@@ -22523,7 +22546,7 @@ select * from trsusut a where $tglreg group by kd_brg,keterangan order by tahun"
                                 $tot_akum_thn = $tot_akum_thn+$akumini;
                                 $tot_nb_thn  = $tot_nb_thn+$nbini;
                     $cRet .="<tr>
-                                <td colspan=\"14\" bgcolor=\"#CCCCCC\" align=\"center\" width =\"2%\" style=\"font-size:11px\"><b>Jumlah</b></td>
+                                <td colspan=\"15\" bgcolor=\"#CCCCCC\" align=\"center\" width =\"2%\" style=\"font-size:11px\"><b>Jumlah</b></td>
                                 <td bgcolor=\"#CCCCCC\" align=\"right\" style=\"font-size:11px\"><b>".number_format($totalsel,2,',','.')."</b></td>
                                 <td bgcolor=\"#CCCCCC\" colspan=\"4\" width =\"5%\" align=\"left\" style=\"font-size:11px\"></td>
                                 <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b>".number_format($tot_susut_per_thn_lalu,2,',','.')."</b></td>
