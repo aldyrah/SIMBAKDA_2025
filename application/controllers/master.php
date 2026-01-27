@@ -5822,34 +5822,35 @@ ORDER BY kd_kelompok ASC, b.latest_kd_brg DESC;";
             $result = array();
             $ii = 0;
             foreach ($query->result_array() as $resulte) {
-                // Extract the part after the last dot
-                $parts = explode('.', $resulte['latest_kd_brg']);
-                $last_part = end($parts);
-    
-                // Pad last_part with zero if it's a single digit
-                if (is_numeric($last_part) && $last_part < 10) {
-                    $last_part = str_pad($last_part, 2, '0', STR_PAD_LEFT);
-                }
-    
-                // Calculate and pad last_part2
-                $last_part2 = $last_part + 1;
-                if ($last_part2 < 10) {
-                    $last_part2 = str_pad($last_part2, 2, '0', STR_PAD_LEFT);
-                }
-    
-                $result[] = array(
-                    'id' => $ii,
-                    'kd_kelompok' => $resulte['kd_kelompok'],
-                    'nm_kelompok' => $resulte['nm_kelompok'],
-                    'nakhir' => $last_part2,  // Data after the last dot
-                );
-                $ii++;
+
+    // Default jika belum ada barang
+    $last_part = 0;
+
+    if (!empty($resulte['latest_kd_brg'])) {
+        // Ambil angka setelah titik terakhir
+        $parts = explode('.', $resulte['latest_kd_brg']);
+        $last_part = (int) end($parts);
+    }
+
+    // Tambah 1
+    $last_part2 = $last_part + 1;
+
+    // Padding 4 digit → 0001
+    $last_part2 = str_pad($last_part2, 4, '0', STR_PAD_LEFT);
+
+    $result[] = array(
+        'id' => $ii,
+        'kd_kelompok' => $resulte['kd_kelompok'],
+        'nm_kelompok' => $resulte['nm_kelompok'],
+        'nakhir' => $last_part2,
+    );
+
+    $ii++;
             }
     
             echo json_encode($result);
         }
     }
-    
     
       function ambil_bank() {
         if($this->auth->is_logged_in() == false){
