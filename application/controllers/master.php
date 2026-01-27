@@ -6042,55 +6042,58 @@ ORDER BY kd_kelompok ASC, b.latest_kd_brg DESC;";
        }
     }
 
-
-    function ambil_brg_dh() {
-        if($this->auth->is_logged_in() == false){
-            redirect(site_url().'/welcome/login');
-        }else{
-        $lccr = $this->input->post('q');    
-        $lccr2 = $this->input->post('r');           
-        //$gol  = $this->input->post('subkel');
-        $gol  = $this->input->post('bidang');
-        //$gol  = $this->input->post('gol');
-        //$sts  = $this->input->post('sts'); 
-       /* $csql1 ="";
-        if ($gol!=''){
-            //$csql1 = "left(kd_brg,11) = '$gol' and ";
-                    $csql1 = "left(a.kd_brg,5) = '$gol' and ";
-        }else {
-            $csql1 = "";
-        }*/
-        if($lccr!=''){
-            $like="and (upper(a.kd_brg) like upper('%$lccr%') or upper(a.nm_brg) like upper('%$lccr%'))";
-        }else{
-            $like="";
-        }
-        
- 
-         $sql = "SELECT * FROM mbarang a
-                 where left(a.kd_brg,5) = '$gol' $like order by kd_brg ";//limit 0,100    
-
- 
-        $query1 = $this->db->query($sql);  
-        $result = array();
-        $ii = 0;
-        foreach($query1->result_array() as $resulte)
-        { 
-           
-            $result[] = array(
-                        'id' => $ii,        
-                        'kd_brg' => $resulte['kd_brg'],  
-                        'nm_brg' => $resulte['nm_brg'],
-                        'kd_rek5'=> $resulte['kd_rek5'],
-                        'nm_rek5'=> $resulte['nm_rek5']                        
-                        );
-                        $ii++;
-        }
-           
-        echo json_encode($result);
-       $query1->free_result();
-       }
+function ambil_brg_dh()
+{
+    if ($this->auth->is_logged_in() == false) {
+        redirect(site_url() . '/welcome/login');
+        return;
     }
+
+    $lccr   = $this->input->post('q');
+    $lccr2  = $this->input->post('r'); // belum dipakai
+    $gol    = $this->input->post('bidang');
+
+    // Filter pencarian
+    if ($lccr != '') {
+        $like = "AND (
+                    UPPER(a.kd_brg) LIKE UPPER('%$lccr%')
+                    OR UPPER(a.nm_brg) LIKE UPPER('%$lccr%')
+                 )";
+    } else {
+        $like = "";
+    }
+
+    $sql = "
+        SELECT 
+            a.kd_brg,
+            a.nm_brg,
+            a.kd_rek5,
+            a.nm_rek5
+        FROM mbarang a
+        WHERE LEFT(a.kd_brg, 9) = '$gol'
+        $like
+        ORDER BY a.kd_brg
+    ";
+
+    $query  = $this->db->query($sql);
+    $result = array();
+    $i      = 0;
+
+    foreach ($query->result_array() as $row) {
+        $result[] = array(
+            'id'        => $i,
+            'kd_brg'    => $row['kd_brg'],
+            'nm_brg'    => $row['nm_brg'],
+            'kd_rek5'   => $row['kd_rek5'],
+            'nm_rek5'   => $row['nm_rek5']
+        );
+        $i++;
+    }
+
+    $query->free_result();
+    echo json_encode($result);
+}
+
 	
 	function ambil_brg_kib() {
         if($this->auth->is_logged_in() == false){
