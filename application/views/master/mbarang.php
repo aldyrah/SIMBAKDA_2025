@@ -26,7 +26,7 @@
        mode:'remote',
        url:'<?php echo base_url(); ?>index.php/master/ambil_kel1',  
        columns:[[  
-           {field:'kd_kelompok',title:'KELOMPOK',width:100},  
+           {field:'kd_kelompok',title:'KELOMPOK',width:120},  
            {field:'nm_kelompok',title:'NAMA KELOMPOK',width:400}    
        ]],  
        onSelect:function(rowIndex,rowData){
@@ -286,12 +286,19 @@
            <tr>
                 <td>KELOMPOK BARANG</td>
                 <td>:</td>
-                <td><input id="kel" name="kel" style="width: 100px;" /> <input type="text" id="nmkel" style="border:0;width: 400px;" readonly="true"/></td>
+                <td><input id="kel" name="kel" style="width: 200px;" /> </td>
+            </tr>
+
+                <tr>
+                                    <td></td>
+                <td></td>
+
+                    <td><input type="text" id="nmkel" style="width: 500px;" readonly="true"/></td>
            </tr>
            <tr>
                 <td width="30%">KODE BARANG</td>
                 <td width="1%">:</td>
-                <td><input type="text" id="kdbrg" readonly style="width:100px;"/></td>  
+                <td><input type="text" id="kdbrg" readonly style="width:200px;"/></td>  
             </tr>            
             <tr>
                 <td width="30%">NAMA BARANG</td>
