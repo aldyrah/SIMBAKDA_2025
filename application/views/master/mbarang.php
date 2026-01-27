@@ -68,7 +68,7 @@
         columns:[[
     	    {field:'kd_brg',
     		title:'Kode Barang',
-    		width:15,
+    		width:20,
             align:"center"},
             {field:'nm_brg',
     		title:'Nama Barang',
