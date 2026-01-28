@@ -1385,7 +1385,7 @@ class Transaksi extends CI_Controller {
         $this->template->load('index','transaksi/riwayat_f',$data) ;         
     }
 	
-     function ambil_dok_a() {
+     function ambil_dok_a() { 
         
 		$skpd = $this->session->userdata('skpd');
 		$oto  = $this->session->userdata('otori');
@@ -1397,13 +1397,13 @@ class Transaksi extends CI_Controller {
             $where1 = "where LEFT(a.kd_brg,2)='01' and b.kd_uskpd ='$skpd' ";
         }*/
         if($oto == '01' && $skpd=='1.20.05.01'){
-            $where1 = "where LEFT(a.kd_brg,2)='01' and b.kd_uskpd like '%' ";
+            $where1 = "where LEFT(a.kd_brg,6)='1.3.01' and b.kd_uskpd like '%' ";
         }else if($oto == '01' && $skpd<>'1.20.05.01'){
-            $where1 = "where LEFT(a.kd_brg,2)='01' and b.kd_uskpd ='$skpd' ";
+            $where1 = "where LEFT(a.kd_brg,6)='1.3.01' and b.kd_uskpd ='$skpd' ";
         }else if($oto=='02' && $skpd<>'1.20.05.01'){
-            $where1 = "where LEFT(a.kd_brg,2)='01' and b.kd_uskpd ='$skpd' ";
+            $where1 = "where LEFT(a.kd_brg,6)='1.3.01' and b.kd_uskpd ='$skpd' ";
         }else if($oto=='02' && $skpd=='1.20.05.01'){
-            $where1 = "where LEFT(a.kd_brg,2)='01' and b.kd_uskpd like '%' ";
+            $where1 = "where LEFT(a.kd_brg,6)='1.3.01' and b.kd_uskpd like '%' ";
         }
         
         $lccr = $this->input->post('q');
@@ -1456,6 +1456,7 @@ class Transaksi extends CI_Controller {
         echo json_encode($result);
     	   
 	}
+
 
     function cekno_kib_b_dh(){
         $skpd   = $this->input->post('skpd');
