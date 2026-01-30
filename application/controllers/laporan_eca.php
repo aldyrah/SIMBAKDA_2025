@@ -317,6 +317,18 @@ public function cetak_alatmesinopd() {
         } 
     }
 
+	function cetak_pengakhiran_pemanfaatan()
+    {
+        if($this->auth->is_logged_in() == false){
+            redirect(site_url().'/welcome/login');
+        }else{
+        $data['page_title']= 'CETAK PEMANFAATAN';
+        $data['page_title']= 'CETAK PEMANFAATAN';
+        $this->template->set('title', 'CETAK PEMANFAATAN');   
+        $this->template->load('index','laporan/laporan_eca/lap_pengakhiran_pemanfaatan',$data);
+        } 
+    }
+
     function cetak_reklasifikasi()
     {
         if($this->auth->is_logged_in() == false){
