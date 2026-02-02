@@ -13682,8 +13682,12 @@ $cnama	= $row->nama;
 		 } 
     }
 
-     function lap_kib_a_dh(){
-       
+     function lap_kib_b_dh(){
+        //ADIT KIB B
+
+        // Naikkan memory limit jadi 1GB (hanya untuk eksekusi ini)
+        ini_set('memory_limit', '2048M');
+        
         $konfig     = $this->ambil_config();
         $nmkab      = strtoupper($konfig['kabupaten']);
         $kota       = strtoupper($konfig['kota']);
@@ -13712,11 +13716,17 @@ $cnama	= $row->nama;
         }
         $pilctk     = $_REQUEST['pilctk'];
         
+        $jenis      = $_REQUEST['jenis'];
+        $nmjenis    = $_REQUEST['nmjenis'];
+        $jenis_brg  = strlen($jenis);
 
         // if($pilctk=='1' || $pilctk=='3'){
-            $xy=0;
-            // $csqlttdpa=$this->db->query("SELECT nip,nama,jabatan FROM ttd WHERE ckey='QQ' AND skpd='$skpd'");
-            $csqlttdpa=$this->db->query("SELECT nip,nama,jabatan,ckey FROM ttd WHERE ckey IN ('PA','IP','SP','DR','SD') AND skpd='$skpd'");
+        //     $xy=0;
+
+        $xy = 0;
+        $yx = 0;
+
+            $csqlttdpa=$this->db->query("SELECT nip,nama,jabatan,ckey FROM ttd WHERE ckey in ('PA','IP','SP','DR','SD') and skpd='$skpd'");
             foreach($csqlttdpa->result() as $rowtd){
                 $nippa =$rowtd->nip;
                 $namapa=$rowtd->nama;
@@ -13727,25 +13737,24 @@ $cnama	= $row->nama;
 
             if ($key=='PA'){
             $jabat='KEPALA';
-            } else if ($key=='IP') {
-                $jabat='INSPEKTUR';
-            } else if ($key=='SP') {
-                $jabat='SEKRETARIS DPRD';
-            }  else if ($key=='DR') {
-                $jabat='DIREKTUR';
-            } else if ($key=='SD'){
-              $jabat='';
-            } else {
-                $jabat='BENDAHARA BARANG';
-            }
+        } else if ($key=='IP') {
+            $jabat='INSPEKTUR';
+        } else if ($key=='SP') {
+            $jabat='SEKRETARIS DPRD';
+        }  else if ($key=='DR') {
+            $jabat='DIREKTUR';
+        } else if ($key=='SD'){
+          $jabat='';
+        } else {
+            $jabat='BENDAHARA BARANG';
 
-            if($xy==0){
-                $nippa      ='Belum Ada NIP';
-                $namapa     ='Belum Ada Nama';
-                $jabatanpa  ='Belum Ada Jabatan';
-            }
-            $yx=0;
-            // $csqlttdbk=$this->db->query("SELECT nip,nama,jabatan FROM ttd WHERE ckey='BK' AND skpd='$skpd'");
+        }
+        //     if($xy==0){
+        //         $nippa      ='Belum Ada NIP';
+        //         $namapa     ='Belum Ada Nama';
+        //         $jabatanpa  ='Belum Ada Jabatan';
+        //     }
+        //     $yx=0;
             $csqlttdbk=$this->db->query("SELECT nip,nama,jabatan FROM ttd WHERE ckey IN ('BB','PB') AND skpd='$skpd'");
             foreach($csqlttdbk->result() as $rowtd){
                 $nipbk =$rowtd->nip;
@@ -13753,11 +13762,11 @@ $cnama	= $row->nama;
                 $jabatanbk=$rowtd->jabatan;
                 $yx++;        
             }
-            if($yx==0){
-                $nipbk      ='Belum Ada NIP';
-                $namabk     ='Belum Ada Nama';
-                $jabatanbk  ='Belum Ada Jabatan';
-            }
+        //     if($yx==0){
+        //         $nipbk      ='Belum Ada NIP';
+        //         $namabk     ='Belum Ada Nama';
+        //         $jabatanbk  ='Belum Ada Jabatan';
+        //     }
         // }elseif($pilctk=='2'){
         //     $xy=0;
         //     $csqlttdpa=$this->db->query("SELECT nip,nama,jabatan FROM ttd WHERE ckey='QQ' AND skpd='$skpd' AND kd_lokasi='$bidang'");
@@ -13788,247 +13797,323 @@ $cnama	= $row->nama;
             
         // }
         
+        
         $tglcetak   = $this->tanggal_indonesia($_REQUEST['tglcetak']);
         
         $cRet ='';
-        $cRet .= "<table style=\"border-collapse:collapse;\" width=\"90%\" align=\"center\" border=\"0\" cellspacing=\"1\" cellpadding=\"1\">
-
+        $cRet .= "<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"4\">";
+          $cRet .="
+            
             <tr>
                 <td></td>
-                <td align=\"center\" colspan=\"13\" style=\"font-size:14px;border: solid 1px white;\"><B>KARTU INVENTARIS BARANG (KIB) A<br>TANAH</B></td>
-            </tr><BR/><BR/><BR/>
-            </table>";
-        $cRet .= "<table style=\"border-collapse:collapse;\" width=\"90%\" align=\"left\" border=\"0\" cellspacing=\"1\" cellpadding=\"1\">";
-          
-           if ($skpd <>''){ 
+                <td align=\"center\" colspan=\"16\" style=\"font-size:14px;border: solid 1px white;\"><B>KARTU INVENTARIS BARANG (KIB) B<br>PERALATAN DAN MESIN</B></td>
+            </tr><BR/><BR/><BR/></table>";
+        $cRet .= "<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"4\">";
+           //if ($skpd <>''){ 
           $cRet .="
             <tr>
-                <td align=\"left\" style=\"font-size:12px;\" width =\"10%\" >&ensp;&ensp;SKPD</td>
-                <td align=\"left\" style=\"font-size:12px;\">:<B> $skpd  $nmskpd</B></td>
-            </tr>";} 
-          if ($pilctk=='2'){    
+                <td align=\"left\" style=\"font-size: 10px;\" width =\"10%\" >&ensp;&ensp;SKPD</td>
+                <td align=\"left\" style=\"font-size: 10px;\">:<B> $skpd  $nmskpd</B></td>
+            </tr>";//} 
+          if ($pilctk=='2' || $pilctk=='3'){    
         $cRet .=" <tr>
-                <td align=\"left\" style=\"font-size:12px;\">&ensp;&ensp;UNIT</td>
-                <td align=\"left\" style=\"font-size:12px;\">:<B> $bidang  $nmbid</B></td>
+                <td align=\"left\" style=\"font-size: 10px;\" width =\"15%\" >&ensp;&ensp;UNIT</td>
+                <td align=\"left\" style=\"font-size: 10px;\">:<B> $bidang  $nmbid</B></td>
             </tr>";}
           $cRet .="<tr>
-                <td align=\"left\" style=\"font-size:12px; width: 100px;\">&ensp;&ensp;KABUPATEN</td>
-                <td align=\"left\" style=\"font-size:12px;\">: $nmkab</td>
+                <td align=\"left\" style=\"font-size: 10px;\">&ensp;&ensp;KABUPATEN</td>
+                <td align=\"left\" style=\"font-size: 10px;\">: $nmkab</td>
             </tr>";
         if($pilctk=='1' || $pilctk=='2'){
             if($blnthn=='01'){
                 $cRet .="<tr>
-                <td align=\"left\" style=\"font-size:12px;\">&ensp;&ensp;PERIODE</td>
-                <td align=\"left\" style=\"font-size:12px;\">: $periodbulan  $tahun</td>
+                <td align=\"left\" style=\"font-size: 10px;\">&ensp;&ensp;PERIODE</td>
+                <td align=\"left\" style=\"font-size: 10px;\">: $periodbulan  $tahun</td>
             </tr>";
             }else{
                 $cRet .="<tr>
-                <td align=\"left\" style=\"font-size:12px;\">&ensp;&ensp;PERIODE</td>
-                <td align=\"left\" style=\"font-size:12px;\">: $tahun1 s.d $tahun</td>
+                <td align=\"left\" style=\"font-size: 10px;\">&ensp;&ensp;PERIODE</td>
+                <td align=\"left\" style=\"font-size: 10px;\">: $tahun1 s.d $tahun</td>
             </tr>";
             }
         }else {
             $cRet .="<tr>
-                <td align=\"left\" style=\"font-size:13px;\">&ensp;&ensp;PERIODE</td>
-                <td align=\"left\" style=\"font-size:13px;\">: $tahun1 s/d $tahun2</td>
+                <td align=\"left\" style=\"font-size: 10px;\">&ensp;&ensp;PERIODE</td>
+                <td align=\"left\" style=\"font-size: 10px;\">: $tahun1 s/d $tahun2</td>
             </tr>";
         }
-// Penutupan tabel sebelumnya jika ada
-$cRet .= "</table>";
+           $cRet .="<tr>
+                        <td align=\"left\" style=\"font-size: 10px;\">&ensp;&ensp;JENIS</td>
+                        <td align=\"left\" style=\"font-size: 10px;\">: $nmjenis</td>
+                    </tr>
+                </table>";
+           $cRet .= "
+<table style=\"border-collapse:collapse; table-layout:fixed; width:100%;\" 
+    align=\"center\" border=\"1\" cellspacing=\"0\" cellpadding=\"2\">
+";
 
-// Tabel Utama dengan table-layout fixed agar lebar kolom konsisten
-$cRet .= "<table style=\"border-collapse:collapse; table-layout: fixed;\" width=\"100%\" align=\"center\" border=\"1\" cellspacing=\"0\" cellpadding=\"2\">
-            <thead>
-                <tr>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"3\" style=\"font-size:12px; width: 30px;\">No</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"3\" style=\"font-size:12px; width: 160px;\">Jenis Barang/<br>Nama Barang</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" colspan=\"3\" style=\"font-size:12px\">Nomor</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"3\" style=\"font-size:12px; width: 60px;\">Luas(m2)</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"3\" style=\"font-size:12px; width: 45px;\">Tahun</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"3\" style=\"font-size:12px; width: 180px;\">Letak / Alamat</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" colspan=\"3\" style=\"font-size:12px\">Status Tanah</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"3\" style=\"font-size:12px; width: 85px;\">Penggunaan</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"3\" style=\"font-size:12px; width: 75px;\">Asal Usul</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"3\" style=\"font-size:12px; width: 110px;\">Harga</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"3\" style=\"font-size:12px; width: 100px;\">Keterangan</td>
-                </tr>
-                <tr>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"2\" style=\"font-size:12px; width: 90px;\">Kode Barang</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"2\" style=\"font-size:12px; width: 90px;\">Kode Sub Barang</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"2\" style=\"font-size:12px; width: 55px;\">Register</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" rowspan=\"2\" style=\"font-size:12px; width: 115px;\">Hak</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" colspan=\"2\" style=\"font-size:12px\">Sertifikat</td>
-                </tr>
-                <tr>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:12px; width: 75px;\">Tanggal</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:12px; width: 100px;\">Nomor</td>
-                </tr>
-                <tr>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">1</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">2</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">3</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">3a</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">4</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">5</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">6</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">7</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">8</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">9</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">10</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">11</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">12</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">13</td>
-                    <td bgcolor=\"#CCCCCC\" align=\"center\" style=\"font-size:10px\">14</td>
-                </tr>
-            </thead>";
+ // ================= HEADER UTAMA =================
+$cRet .= "
+<tr style=\"font-size:9px; background-color:#CCCCCC;\">
+    <th rowspan=\"2\">No</th>
+    <th rowspan=\"2\" style=\"width: 150px;\">Kode Barang</th>
+    <th rowspan=\"2\" style=\"width: 150px;\">Kode Sub Barang</th>
+    <th rowspan=\"2\" style=\"width: 180px;\">Nama Barang</th>
+    <th rowspan=\"2\" style=\"width: 100px;\">No. Register</th>
+    <th rowspan=\"2\" style=\"width: 120px;\">Merek / Tipe</th>
+    <th rowspan=\"2\" style=\"width: 85px;\">Ukuran/<br>CC</th>
+    <th rowspan=\"2\" style=\"width: 110px;\">Bahan</th>
+    <th colspan=\"2\">Quantity</th>
+    <th rowspan=\"2\" style=\"width: 65px;\">Tahun</th>
+    <th colspan=\"5\">Nomor</th>
+    <th rowspan=\"2\" style=\"width: 85px;\">Asal Usul Perolehan</th>
+    <th rowspan=\"2\" style=\"width: 150px;\">Harga</th>
+    <th rowspan=\"2\">Kondisi</th>
+    <th rowspan=\"2\" style=\"width: 300x;\">Keterangan</th>
+    <th colspan=\"5\">PENYUSUTAN 2024</th>
+    <th rowspan=\"2\" style=\"width: 180px;\">Masa Manfaat Telah Dilewati</th>
+    <th colspan=\"3\">PENYUSUTAN 2025</th>
+</tr>
+";
 
-            // Logika Tanggal
+
+// ================= SUB HEADER =================
+$cRet .= "
+<tr style=\"font-size:8px; background-color:#CCCCCC;\">
+    <th style=\"width: 125px\">Jumlah Barang</th>
+    <th style=\"width: 125px\">Harga Satuan</th>
+
+    <th style=\"width: 75px;\">Pabrik</th>
+    <th style=\"width: 75px;\">Rangka</th>
+    <th style=\"width: 75px;\">Mesin</th>
+    <th style=\"width: 75px;\">Polisi</th>
+    <th style=\"width: 75px;\">BPKB</th>
+
+    <th style=\"width: 130px;\">Masa Manfaat</th>
+    <th style=\"width: 170px;\">Masa Manfaat Telah Dilewati</th>
+    <th style=\"width: 185px;\">Penyusutan Tahun 2024</th>
+    <th style=\"width: 185px;\">Akumulasi Penyusutan Tahun 2024</th>
+    <th style=\"width: 150px;\">Nilai Buku Per 31 Desember 2024</th>
+
+    <th style=\"width: 180px;\">Penyusutan Tahun 2025</th>
+    <th style=\"width: 190px;\">Akumulasi Penyusutan Tahun 2025</th>
+    <th style=\"width: 150px;\">Nilai Buku Per 31 Desember 2025</th>
+</tr>
+";
+
+
+// ================= NOMOR KOLOM =================
+$cRet .= "<tr style=\"font-size:8px; background-color:#CCCCCC;\">";
+
+$no = 1;
+for ($i = 1; $i <= 29; $i++) {
+
+    if ($i == 3) {
+        $label = "2a";
+    } else {
+        $label = $no;
+        $no++;
+    }
+
+    $cRet .= "<td align=\"center\">$label</td>";
+}
+
+$cRet .= "</tr>";"
+
+
+
+            </thead>
+            ";
+
+
+            
             if($blnthn=='01'){
                 $tglreg     = "tgl_reg<='$last'";
                 $tglmutasi  = "tgl_mutasi>='$last'";
                 $tglpindah  = "tgl_pindah>='$last'";
                 $tglhapus   = "tgl_hapus>='$last'";
                 $tglriwayat = "tgl_riwayat>='$last'";
+                $tgl_kap    = "c.tgl_kap<='$last'";
+                $dh         = "'$last'>='2016-01-01'";
             }else{
+                // $tglreg     = "YEAR(tgl_reg) BETWEEN '$tahun1' AND '$tahun'";
                 $tglreg     = "tahun BETWEEN '$tahun1' AND '$tahun'";
                 $tglmutasi  = "YEAR(tgl_mutasi) >'$tahun'";
                 $tglpindah  = "YEAR(tgl_pindah) >'$tahun'";
                 $tglhapus   = "YEAR(tgl_hapus) >'$tahun'";
                 $tglriwayat = "YEAR(tgl_riwayat) >'$tahun'";
+                $tgl_kap    = "YEAR(c.tgl_kap) BETWEEN '$tahun1' AND '$tahun'";
+                $dh         = "'$tahun'>='2016'";
             }
-
-            // Logika SKPD
             if($pilctk=='1'){
                 $kdskpd= "kd_skpd='$skpd'";
             }else{
                 $kdskpd= "kd_skpd='$skpd' AND kd_unit='$bidang'";
             }
 
-            // SQL Query
-            $sql="SELECT kd_bidang AS kd_brg, (SELECT nm_bidang FROM mbidang WHERE bidang=kd_bidang) AS nm_brg,
-                        '' AS kd_sub_brg, '' AS no_reg, '' AS luas, '' AS tahun, '' AS alamat1,
-                        '' AS status_tanah, '' AS tgl_sertifikat,
-                        '' AS no_sertifikat, '' AS penggunaan, '' AS asal, SUM(nilai) AS nilai, '' AS keterangan FROM trkib_a 
-                        WHERE $kdskpd AND $tglreg 
-                        AND (no_mutasi IS NULL OR no_mutasi='' OR $tglmutasi) 
-                        AND (no_pindah IS NULL OR no_pindah='' OR $tglpindah) 
-                        AND (no_hapus IS NULL OR no_hapus='' OR $tglhapus)  
-                        AND (kd_riwayat IS NULL OR kd_riwayat='' OR kd_riwayat='9' OR $tglriwayat) GROUP BY kd_bidang
-                        UNION
-                        SELECT kd_brg, nm_brg, kd_brg AS kd_sub_brg, no_reg, luas, tahun, alamat1, status_tanah, DATE_FORMAT(tgl_sertifikat,'%d-%m-%Y') as tgl_sertifikat,
-                        no_sertifikat, penggunaan, IF(LENGTH(id_barang)>='75','MUTASI',asal) AS asal, nilai, keterangan 
-                        FROM trkib_a WHERE $kdskpd AND $tglreg 
-                        AND (no_mutasi IS NULL OR no_mutasi='' OR $tglmutasi) 
-                        AND (no_pindah IS NULL OR no_pindah='' OR $tglpindah) 
-                        AND (no_hapus IS NULL OR no_hapus='' OR $tglhapus)  
-                        AND (kd_riwayat IS NULL OR kd_riwayat='' OR kd_riwayat='9' OR $tglriwayat)
-                        ORDER BY tahun, kd_sub_brg";
-
-            $query1 = $this->db->query($sql);
-            $i=0; $totalsel=0;
-
-            foreach ($query1->result() as $row){
-                $nm_brg         = $row->nm_brg;
-                $kd_brg_header  = $row->kd_brg;
-                $kd_sub_brg     = $row->kd_sub_brg;
-                $no_reg         = $row->no_reg;
-                $luas           = number_format((float) ($row->luas ?? 0), 2, ',', '.');
-                $tahun          = $row->tahun;
-                $alamat1        = $row->alamat1;
-                $status_tanah   = $row->status_tanah;
-                $tgl_sertifikat = $row->tgl_sertifikat;
-                $no_sertifikat  = $row->no_sertifikat;
-                $penggunaan     = $row->penggunaan;
-                $asal           = $row->asal;
-                $total          = number_format($row->nilai,2,',','.');
-                $keterangan     = $row->keterangan;
-
-                if(strlen($kd_brg_header) != 5){
-                    $i++;
-                    $totalsel += $row->nilai;
-                }
-
-                if(strlen($kd_brg_header) == 5){
-                    // Header Kelompok
-                    $cRet .="<tr>
-                                <td colspan=\"13\" align=\"left\" style=\"font-size:11px\"><b>&nbsp;&nbsp;&nbsp;$kd_brg_header - $nm_brg</b></td>
-                                <td align=\"right\" style=\"font-size:11px\"><b>$total</b></td>
-                                <td align=\"left\" style=\"font-size:11px\"></td>
-                            </tr>";
-                } else {   
-                    // Detail Barang
-                    $cRet .="<tr>
-                                <td align=\"center\" style=\"font-size:11px\">$i</td>
-                                <td align=\"left\" style=\"font-size:11px\">$nm_brg</td>
-                                <td align=\"left\" style=\"font-size:11px\">$kd_brg_header</td>
-                                <td align=\"left\" style=\"font-size:11px\">$kd_sub_brg</td>
-                                <td align=\"center\" style=\"font-size:11px\">$no_reg</td>
-                                <td align=\"center\" style=\"font-size:11px\">$luas</td>
-                                <td align=\"center\" style=\"font-size:11px\">$tahun</td>
-                                <td align=\"left\" style=\"font-size:11px\">$alamat1</td>
-                                <td align=\"left\" style=\"font-size:11px\">$status_tanah</td>
-                                <td align=\"left\" style=\"font-size:11px\">$tgl_sertifikat</td>
-                                <td align=\"left\" style=\"font-size:11px\">$no_sertifikat</td>
-                                <td align=\"left\" style=\"font-size:11px; text-align: center;\">$penggunaan</td>
-                                <td align=\"left\" style=\"font-size:11px\">$asal</td>
-                                <td align=\"right\" style=\"font-size:11px\">$total</td>
-                                <td align=\"left\" style=\"font-size:11px\">$keterangan</td>
-                            </tr>";
-                }
+            if($jenis_brg=='2'){
+                $jenis_brg="and left(a.kd_brg,2)='$jenis'";
+            }elseif($jenis_brg=='5'){
+                $jenis_brg="and left(a.kd_brg,5)='$jenis'";
             }
+                if(strlen($jenis)==2){
+                $sql="SELECT a.kd_bidang AS kd_brg,(SELECT nm_bidang FROM mbidang WHERE bidang=a.kd_bidang)AS nm_brg,'' AS no_reg,'' AS merek,'' AS silinder,'' AS kd_bahan,'' AS jumlah,'' AS kd_satuan,'' AS tahun,'' AS pabrik,'' AS no_rangka,
+                        '' AS no_mesin,'' AS no_polisi,'' AS no_bpkb,'' AS asal,SUM(nilai) AS nilai,'' as a.kondisi'' AS keterangan,'' AS no_urut 
+                        FROM trkib_b a LEFT JOIN ms_kapitalisasi b ON LEFT(a.kd_brg,8)=b.kd_kelompok
+                        WHERE $kdskpd AND $tglreg
+                        AND (no_mutasi IS NULL OR no_mutasi='' OR $tglmutasi) 
+                        AND (no_pindah IS NULL OR no_pindah='' OR $tglpindah) 
+                        AND (no_hapus IS NULL OR no_hapus='' OR $tglhapus)  
+                        AND (kd_riwayat IS NULL OR kd_riwayat='' OR kd_riwayat='9' OR $tglriwayat) $jenis_brg
+                        -- AND IF($dh,a.nilai>=b.nilai_kap AND a.kondisi<>'RB',a.nilai<>'' AND a.kondisi<>'')
+                        GROUP BY a.kd_bidang
+                        UNION ALL
+                        SELECT a.kd_brg,a.nm_brg AS nm_brg,a.no_reg,a.merek,a.silinder,a.kd_bahan,a.jumlah,a.kd_satuan,a.tahun,a.pabrik,a.no_rangka,a.no_mesin,
+                        a.no_polisi,a.no_bpkb,IF(LENGTH(a.id_barang)>='75','MUTASI',a.asal)AS asal,a.nilai AS nilai,a.kondisi,a.keterangan,a.no_urut 
+                        FROM trkib_b a LEFT JOIN ms_kapitalisasi b ON LEFT(a.kd_brg,8)=b.kd_kelompok
+                        WHERE $kdskpd AND $tglreg
+                        AND (a.no_mutasi IS NULL OR a.no_mutasi='' OR $tglmutasi) 
+                        AND (a.no_pindah IS NULL OR a.no_pindah='' OR $tglpindah) 
+                        AND (a.no_hapus IS NULL OR a.no_hapus='' OR $tglhapus)  
+                        AND (a.kd_riwayat IS NULL OR a.kd_riwayat='' OR a.kd_riwayat='9' OR $tglriwayat) $jenis_brg
+                        -- AND IF($dh,a.nilai>=b.nilai_kap AND a.kondisi<>'RB',a.nilai<>'' AND a.kondisi<>'')
+                        -- ORDER BY kd_brg,tahun,no_reg 
+    ORDER BY tahun";
 
-            // Baris Total
-            $cRet .="<tr>
-                        <td bgcolor=\"#CCCCCC\" colspan=\"13\" align=\"center\" style=\"font-size:11px\"><b>J U M L A H</b></td>
-                        <td bgcolor=\"#CCCCCC\" align=\"right\" style=\"font-size:11px\"><b>".number_format($totalsel,2,',','.')."</b></td>
-                        <td bgcolor=\"#CCCCCC\" align=\"left\" style=\"font-size:11px\"></td>
-                    </tr>";
+                    }else{
+                        $sql="SELECT a.kd_brg,a.nm_brg AS nm_brg,a.no_reg,a.merek,a.silinder,a.kd_bahan,a.jumlah,a.kd_satuan,a.tahun,a.pabrik,a.no_rangka,a.no_mesin,
+                        a.no_polisi,a.no_bpkb,IF(LENGTH(a.id_barang)>='75','MUTASI',a.asal)AS asal,a.nilai AS nilai,a.nilai AS hrg_satuan,a.kondisi,a.keterangan,a.no_urut 
+                        FROM trkib_b a LEFT JOIN ms_kapitalisasi b ON LEFT(a.kd_brg,8)=b.kd_kelompok
+                        WHERE a.kd_skpd='$skpd' AND $tglreg
+                        AND (a.no_mutasi IS NULL OR a.no_mutasi='' OR $tglmutasi) 
+                        AND (a.no_pindah IS NULL OR a.no_pindah='' OR $tglpindah) 
+                        AND (a.no_hapus IS NULL OR a.no_hapus='' OR $tglhapus)  
+                        AND (a.kd_riwayat IS NULL OR a.kd_riwayat='' OR a.kd_riwayat='9' OR $tglriwayat) $jenis_brg
+                        -- AND IF($dh,a.nilai>=b.nilai_kap AND a.kondisi<>'RB',a.nilai<>'' AND a.kondisi<>'')
+                        -- ORDER BY kd_brg,tahun,no_reg
+    ORDER BY tahun";
+                    }
 
-$cRet .="</table>";
+$query1 = $this->db->query($sql);
 
-// Jarak ke Tanda Tangan
-for($zz=0; $zz <= $spasi; $zz++){ $cRet .="<br>"; }
+    $rows = $query1->result();
 
-// Tabel Tanda Tangan (Signature) - Menggunakan 3 kolom simetris
+    $totalsel = 0;      // Total harga (nilai)
+    $total_jumlah = 0;  // Total jumlah barang
+    foreach ($rows as $idx => $row) {
+        $jumlah = is_numeric($row->jumlah) ? (float)$row->jumlah : 0;
+        $nilai  = is_numeric($row->nilai)  ? (float)$row->nilai  : 0;
+
+        $totalsel += $jumlah;
+        $total_jumlah     += $nilai;
+        // Ambil semua field dengan aman
+        $kd_brg     = property_exists($row, 'kd_brg')     ? $row->kd_brg     : '[null]';
+        $kd_tampil = property_exists($row, 'kd_brg') ? $row->kd_brg : '-';
+
+        $pecah = explode('.', $kd_tampil);
+        $kds_brg = implode('.', array_slice($pecah, 0, 3));
+
+
+        $nm_brg     = property_exists($row, 'nm_brg')     ? $row->nm_brg     : '[null]';
+        $no_reg     = property_exists($row, 'no_reg')     ? $row->no_reg     : '[null]';
+        $merek      = property_exists($row, 'merek')      ? $row->merek      : '[null]';
+        $silinder   = property_exists($row, 'silinder')   ? $row->silinder   : '[null]';
+        $kd_bahan   = property_exists($row, 'kd_bahan')   ? $row->kd_bahan   : '[null]';
+        $jumlah     = property_exists($row, 'jumlah')     ? $row->jumlah     : '[null]';
+        $hrg_satuan = property_exists($row, 'hrg_satuan') ? $row->hrg_satuan : '[null]';
+        $tahun      = property_exists($row, 'tahun')      ? $row->tahun      : '[null]';
+        $pabrik     = property_exists($row, 'pabrik')     ? $row->pabrik     : '[null]';
+        $no_rangka  = property_exists($row, 'no_rangka')  ? $row->no_rangka  : '[null]';
+        $no_mesin   = property_exists($row, 'no_mesin')   ? $row->no_mesin   : '[null]';
+        $no_polisi  = property_exists($row, 'no_polisi')  ? $row->no_polisi  : '[null]';
+        $no_bpkb    = property_exists($row, 'no_bpkb')    ? $row->no_bpkb    : '[null]';
+        $asal       = property_exists($row, 'asal')       ? $row->asal       : '[null]';
+        $nilai      = property_exists($row, 'nilai')      ? $row->nilai      : '[null]';
+        $kondisi    = property_exists($row, 'kondisi')    ? $row->kondisi    : '[null]';
+        $keterangan = property_exists($row, 'keterangan') ? $row->keterangan : '[null]';
+
+$cRet .= "<tr style=\"font-size:10px;\">";
+$cRet .= "<td align=\"center\">" . ($idx + 1) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($kd_brg) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($kds_brg) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($nm_brg) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($no_reg) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($merek) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($silinder) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($kd_bahan) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars((string)$jumlah) . "</td>";
+$cRet .= "<td align=\"center\">" . number_format($hrg_satuan, 2, ',', '.') . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($tahun) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($pabrik) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($no_rangka) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($no_mesin) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($no_polisi) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($no_bpkb) . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($asal) . "</td>";
+$cRet .= "<td align=\"center\">" . number_format($nilai, 2, ',', '.') . "</td>";
+$cRet .= "<td align=\"center\">" . htmlspecialchars($kondisi) . "</td>";
+$cRet .= "<td>" . htmlspecialchars($keterangan) . "</td>";
+
+$cRet .= "<td align=\"center\"></td>";
+$cRet .= "<td align=\"center\"></td>";
+$cRet .= "<td align=\"center\"></td>";
+$cRet .= "<td align=\"center\"></td>";
+$cRet .= "<td align=\"center\"></td>";
+$cRet .= "<td align=\"center\"></td>";
+$cRet .= "<td align=\"center\"></td>";
+$cRet .= "<td align=\"center\"></td>";
+$cRet .= "<td align=\"center\"></td>";
+$cRet .= "</tr>";
+        }
+
+/// 1. Tutup tabel DATA terlebih dahulu sebelum masuk ke bagian TTD
+$cRet .= "<tr style=\"font-size:11px; background-color:#CCCCCC; font-weight:bold;\">
+    <td colspan=\"8\" align=\"center\">JUMLAH</td>
+    <td align=\"center\">" . number_format($totalsel, 0, ',', '.') . "</td>
+    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+    <td align=\"right\">" . number_format($total_jumlah, 2, ',', '.') . "</td>
+    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+</tr>";
+
+// KRUSIAL: Tutup tabel utama di sini
+$cRet .= "</table>"; 
+
+// 2. Beri jarak (opsional) antara tabel data dan TTD
+$cRet .= "<br>&nbsp;<br>";
+
+// 3. Mulai tabel TTD yang baru
 $cRet .= "<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"0\">
             <tr>
-                <td width=\"40%\" align=\"center\" style=\"font-size:11px\"></td>
-                <td width=\"20%\"></td>
+                <td width=\"60%\" colspan=\"2\"></td>
                 <td width=\"40%\" align=\"center\" style=\"font-size:11px\">$kota, $tglcetak</td>
             </tr>
             <tr>
-                <td align=\"center\" style=\"font-size:11px\">MENGETAHUI</td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td align=\"center\" style=\"font-size:11px\">$jabat $nmskpd</td>
-                <td></td>
-                <td align=\"center\" style=\"font-size:11px\">PENGURUS BARANG</td>           
+                <td colspan=\"2\"></td>
+                <td align=\"center\" style=\"font-size:11px\">PENGGUNA BARANG</td>           
             </tr>
             <tr>
                 <td colspan=\"3\" height=\"60\"></td>
             </tr>
             <tr>
-                <td align=\"center\" style=\"font-size:11px\"><b>( <u>$namapa </u> )</b></td>
-                <td></td>
-                <td align=\"center\" style=\"font-size:11px\"><b>( <u>$namabk</u> )</b></td>
+                <td colspan=\"2\"></td>
+                <td align=\"center\" style=\"font-size:11px\"><b>( <u>$namapa</u> )</b></td>
             </tr>
             <tr>
+                <td colspan=\"2\"></td>
                 <td align=\"center\" style=\"font-size:11px\">NIP. $nippa</td>
-                <td></td>
-                <td align=\"center\" style=\"font-size:11px\">NIP. $nipbk</td>
             </tr>
         </table>";
-        $data['prev']= $cRet;
-        $kertas='LEGAL';  
+
+// Simpan ke data preview
+$data['prev'] = $cRet;
+        //$kertas='LEGAL';  
         
         $test = str_replace(str_split('\\/:*?"<>|,'), ' ', $nmskpd);
         $skpdx = ucfirst(strtolower($test));
-        $judul  ="Laporan KIB A - $skpdx.pdf";
-        $this->template->set('title', 'Laporan KIB A');  
+        $judul  ="Laporan KIB B - $skpdx.pdf";
+        $this->template->set('title', 'Laporan KIB B');  
         switch($pilih) {
-case 1:
+ case 1:
     // Panggil library mPDF
     require_once FCPATH . 'vendor/autoload.php';
 
@@ -14058,6 +14143,9 @@ break;
             header("Content-Type: application/vnd.ms-word");
             header("Content-Disposition: attachment; filename= $judul - $test.doc");
            $this->load->view('transaksi/excel', $data);
+        break;
+        case 4;     
+            echo $cRet;
         break;
                 }   
           
