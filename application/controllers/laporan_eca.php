@@ -293,6 +293,2259 @@ public function cetak_alatmesinopd() {
         } 
     }
 
+	 public function CetakLampiranIV111() {
+// ADIT LAPORAN PENGGUNAAN
+    
+
+    if($this->auth->is_logged_in() == false){
+        redirect(site_url().'/welcome/login');
+    }
+         
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+  
+    $laporan = $this->input->get('laporan');
+
+    $tahun   = $this->input->get('tahun');
+    $tgl     = $this->input->get('tgl');
+    $inpBulan  = $this->input->get('bulan');
+    $laporan = $this->input->get('laporan');
+    $date    = new DateTime($tgl); // <--- MENGAMBIL FORMAT TGL DARI INPUT TANGGAL CETAK
+    $hari    = $date->format('d'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL TANGGAL SAJA -> 31
+    $dBulan  = $date->format('m'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA BULAN SAJA -> 12
+    $jenis = $this->input->get('jenis');
+    $dTahun  = $date->format(20 . 'y'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA TAHUN SAJA -> 25 (20 . 25) = 2025
+
+    $inputBulan = $this->db                        
+    ->get_where('bulan', ['n_bulan' => $inpBulan])
+    ->row('nama_bulan') ?? '-';                    
+
+
+    $bulan = $this->db
+    ->get_where('bulan', ['n_bulan' => $dBulan])
+    ->row('nama_bulan') ?? '-';
+
+    $cRet = $this->StructureLampiranIV111($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis);
+
+    // 🔹 Bersihkan buffer (WAJIB untuk PDF)
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+  switch ($jenis) {
+
+        case 'pdf':
+
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
+            require_once APPPATH . '3rdparty/mpdf/mpdf.php';
+
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A3-L',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 15
+            ]);
+
+            $mpdf->SetTitle("LAMPIRAN IV.1.1.1");
+            $mpdf->WriteHTML($cRet);
+            $mpdf->Output('Lampiran'.$laporan.'.pdf', 'I');
+            exit;
+
+        break;
+
+
+        case 'excel':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".xls");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'word':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-word");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".doc");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'html':
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        default:
+            show_error('Format cetak tidak dikenal');
+        break;
+         }
+        } 
+
+    public function CetakLampiranIV121() {
+        
+    // ADIT LAPORAN PEROLEHAN
+    
+    if($this->auth->is_logged_in() == false){
+        redirect(site_url().'/welcome/login');
+    }
+         
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+  
+    $laporan = $this->input->get('laporan');
+
+    $tahun   = $this->input->get('tahun');
+    $tgl     = $this->input->get('tgl');
+    $inpBulan  = $this->input->get('bulan');
+    $laporan = $this->input->get('laporan');
+    $date    = new DateTime($tgl); // <--- MENGAMBIL FORMAT TGL DARI INPUT TANGGAL CETAK
+    $hari    = $date->format('d'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL TANGGAL SAJA -> 31
+    $dBulan  = $date->format('m'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA BULAN SAJA -> 12
+    $jenis = $this->input->get('jenis');
+    $dTahun  = $date->format(20 . 'y'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA TAHUN SAJA -> 25 (20 . 25) = 2025
+
+    $inputBulan = $this->db                        
+    ->get_where('bulan', ['n_bulan' => $inpBulan])
+    ->row('nama_bulan') ?? '-';                    
+
+
+    $bulan = $this->db
+    ->get_where('bulan', ['n_bulan' => $dBulan])
+    ->row('nama_bulan') ?? '-';
+
+    $cRet = $this->StructureLampiranIV121($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis);
+
+    // 🔹 Bersihkan buffer (WAJIB untuk PDF)
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+  switch ($jenis) {
+
+        case 'pdf':
+
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
+            require_once APPPATH . '3rdparty/mpdf/mpdf.php';
+
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A3-L',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 15
+            ]);
+
+            $mpdf->SetTitle("LAMPIRAN IV.1.2.1");
+            $mpdf->WriteHTML($cRet);
+            $mpdf->Output('Lampiran'.$laporan.'.pdf', 'I');
+            exit;
+
+        break;
+
+
+        case 'excel':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".xls");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'word':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-word");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".doc");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'html':
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        default:
+            show_error('Format cetak tidak dikenal');
+        break;
+         }
+        }
+        
+    public function CetakLampiranIV122() {
+     
+    // ADIT LAPORAN PEROLEHAN
+    
+    if($this->auth->is_logged_in() == false){
+        redirect(site_url().'/welcome/login');
+    }
+         
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+  
+    $laporan = $this->input->get('laporan');
+
+    $tahun   = $this->input->get('tahun');
+    $tgl     = $this->input->get('tgl');
+    $inpBulan  = $this->input->get('bulan');
+    $laporan = $this->input->get('laporan');
+    $date    = new DateTime($tgl); // <--- MENGAMBIL FORMAT TGL DARI INPUT TANGGAL CETAK
+    $hari    = $date->format('d'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL TANGGAL SAJA -> 31
+    $dBulan  = $date->format('m'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA BULAN SAJA -> 12
+    $jenis = $this->input->get('jenis');
+    $dTahun  = $date->format(20 . 'y'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA TAHUN SAJA -> 25 (20 . 25) = 2025
+
+    $inputBulan = $this->db                        
+    ->get_where('bulan', ['n_bulan' => $inpBulan])
+    ->row('nama_bulan') ?? '-';                    
+
+
+    $bulan = $this->db
+    ->get_where('bulan', ['n_bulan' => $dBulan])
+    ->row('nama_bulan') ?? '-';
+
+    $cRet = $this->StructureLampiranIV122($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis);
+
+    // 🔹 Bersihkan buffer (WAJIB untuk PDF)
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+  switch ($jenis) {
+
+        case 'pdf':
+
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
+            require_once APPPATH . '3rdparty/mpdf/mpdf.php';
+
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A3-L',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 15
+            ]);
+
+            $mpdf->SetTitle("LAMPIRAN IV.1.2.2");
+            $mpdf->WriteHTML($cRet);
+            $mpdf->Output('Lampiran'.$laporan.'.pdf', 'I');
+            exit;
+
+        break;
+
+
+        case 'excel':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".xls");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'word':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-word");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".doc");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'html':
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        default:
+            show_error('Format cetak tidak dikenal');
+        break;
+         }
+        } 
+
+
+    
+    private function StructureLampiranIV111($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis) {
+    $cRet = "";
+    
+    $cRet .= '
+    <style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 7pt;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    th, td {
+        border: 0.5px solid #000;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #bfbfbf;
+        font-weight: bold;
+    }
+    .header-table td {
+        border: none;
+        vertical-align: top;
+    }
+    .header-title {
+        text-align: center;
+        font-weight: bold;
+    }
+    .tfooter td{
+        background-color: #bfbfbf;
+        font-weight: bold;
+    }
+    </style>
+
+    <!-- HEADER LAPORAN -->
+    <br>
+    <br>
+    <table class="header-table" width="100%" style="margin-bottom: 10px;">
+    <tr>
+        <!-- LOGO + LOKASI -->
+        <td width="20%" style="text-align: left;">
+            <img src="public/images/Mappi_logo.png" width="43" style="margin-left: 45px; margin-bottom: 10px;"><br>
+            <span style="font-size: 7pt;">
+                <b>
+                Provinsi Papua Selatan<br>
+                Kabupaten Mappi
+                </b>
+            </span>
+        </td>
+
+        <!-- JUDUL -->
+        <td width="60%" class="header-title">
+            LAPORAN PENGADAAN BMD BERUPA ASET LANCAR PERSEDIAAN<br>
+            KUASA PENGGUNA ANGGARAN ATAU PENGGUNA ANGGARAN<br>
+            BADAN PENGELOLAAN KEUANGAN DAN ASET DAERAH<br>
+            '. strtoupper($inputBulan) .' (SEMESTER PERTAMA)<br>
+            TAHUN ' . $tahun .  '
+        </td>
+
+        <!-- KOSONGKAN ATAU UNTUK SPASI -->
+        <td width="20%"></td>
+    </tr>
+    </table>
+
+    <!-- TABEL HEAD DATA -->
+    <table>
+    <thead>
+    <tr>
+        <th colspan="2" style="width: 350px;">Penggolongan sesuai kodefikasi barang</th>
+        <th rowspan="3" style="width: 50px;">Spesifikasi<br>Nama<br>Barang</th>
+        <th rowspan="3" style="width: 85px;">Merk / Type</th>
+        <th rowspan="3" style="width: 50px;">Jumlah<br>Barang</th>
+        <th rowspan="3" style="width: 50px;">Satuan<br>Barang</th>
+        <th rowspan="3" style="width: 100px;">Harga Satuan</th>
+        <th rowspan="3" style="width: 100px;">Total Nilai Barang</th>
+        <th rowspan="3" style="width: 50px;">Total<br>Biaya<br>Atribusi</th>
+        <th rowspan="3" style="width: 150px;">Nilai Perolehan Barang</th>
+        <th rowspan="3" style="width: 150px;">Harga Satuan Perolehan</th>
+        <th colspan="4">Sub Kegiatan dan Rekening Anggaran Belanja Daerah</th>
+        <th rowspan="3" style="width: 65px;">Tanggal<br>Perolehan</th>
+        <th colspan="3" style="width: 280px;">Dokumen Sumber Pengadaan</th>
+        <th rowspan="3" style="width: 85px;">Keterangan</th>
+    </tr>
+    <tr>
+        <th rowspan="2">Kode Barang</th>
+        <th rowspan="2" style="width: 90px">Nama Barang</th>
+        <th colspan="2">Sub Kegiatan</th>
+        <th colspan="2">Rekening Belanja Daerah</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <th style="width: 95px;">Kode Sub Kegiatan</th>
+        <th style="width: 150px">Nama Sub Kegiatan</th>
+        <th style="width: 90px;">Kode Rekening</th>
+        <th style="width: 150px;">Uraian Belanja</th>
+        <th>Bentuk<br>Kontrak</th>
+        <th>Nama<br>Penyedia</th>
+        <th style="width: 40px;">Nomor Kontrak</th>
+    </tr>
+    <tr>
+        <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+        <th>6</th><th>7</th><th>8 (5×7)</th><th>9</th>
+        <th>10 (8+9)</th><th>11 (10/5)</th>
+        <th>12</th><th>13</th><th>14</th><th>15</th>
+        <th>16</th><th>17</th><th>18</th><th>19</th><th>20</th>
+    </tr>
+    </thead>
+
+    <!-- BODY (TABLE DATA)-->
+
+    <tbody>
+    <tr>
+    <tr>
+    <td height="50px"></td>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align:right;">-</td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: right;"></td>
+    <td></td>
+    <td style="text-align: left;"></td>
+    <td></td>
+    <td style="text-align: left;"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: left;">-</td>
+    </tr>
+    </tr>
+    </tbody>
+
+        <!-- FOOTER (TOTAL)-->
+    <tfoot>
+    <tr class="tfooter">
+        <th colspan="4" style="text-align: center;">TOTAL</th>
+        <td></td>
+        <td></td>
+        <td style="text-align:right;"></td>
+        <td style="text-align:right;"></td>
+        <td style="text-align:right;">-</td>
+        <td style="text-align:right;"></td>
+        <td style="text-align:right;"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tfoot>
+    </table>
+
+    <!-- SIGNATURE / TANDA TANGAN -->
+
+    <div style="width: 100%; margin-top: 30px; clear: both;">
+        
+    <div style="width: 100%; margin-top: 30px; clear: both;">
+        
+        <div style="float: right; text-align: center; width: 350px; font-size: 11px; line-height: 1.2; margin-right: 75px; font-size: 0.5em">
+            <p style="margin: 0; font-weight: bold;">MAPPI,' . $hari . ' ' . strtoupper($bulan) . ' ' . $dTahun . '</p>
+            <p style="margin: 0; font-weight: bold;">Pengguna Barang</p>
+            
+            <div style="margin-top: 50px;">
+                <p style="margin: 0; font-weight: bold; text-decoration: underline; white-space: nowrap;">FRANSISCUS XAVERIUS ALEXIUS, SE</p>
+                <p style="margin: 0; font-weight: bold;">NIP. 19710717 200112 1 005</p>
+            </div>
+        </div>
+    </div>
+    ';
+
+    return $cRet;
+    }
+
+    private function StructureLampiranIV121($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis) {
+        
+    $cRet = "";
+        
+    $cRet .= '
+    <style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 7pt;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    th, td {
+        border: 0.5px solid #000;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #bfbfbf;
+        font-weight: bold;
+    }
+    .header-table td {
+        border: none;
+        vertical-align: top;
+    }
+    .header-title {
+        text-align: center;
+        font-weight: bold;
+    }
+    .tfooter td{
+        background-color: #e0e0e0;
+        font-weight: bold;
+    }
+    </style>
+
+    <!-- HEADER LAPORAN -->
+    <br>
+    <br>
+    <table class="header-table" width="100%" style="margin-bottom: 10px;">
+    <tr>
+        <!-- LOGO + LOKASI -->
+        <td width="20%" style="text-align: left;">
+            <img src="public/images/Mappi_logo.png" width="43" style="margin-left: 45px; margin-bottom: 10px;"><br>
+            <span style="font-size: 7pt;">
+                Provinsi Papua Selatan<br>
+                Kabupaten Mappi
+            </span>
+        </td>
+
+        <!-- JUDUL -->
+        <td width="60%" class="header-title">
+            LAPORAN PENGADAAN BMD BERUPA ASET LANCAR PERSEDIAAN<br>
+            KUASA PENGGUNA ANGGARAN ATAU PENGGUNA ANGGARAN<br>
+            BADAN PENGELOLAAN KEUANGAN DAN ASET DAERAH<br>
+            JUNI (SEMESTER PERTAMA)<br>
+            TAHUN 2025
+        </td>
+
+        <!-- KOSONGKAN ATAU UNTUK SPASI -->
+        <td width="20%"></td>
+    </tr>
+    </table>
+
+    <!-- TABEL HEAD DATA -->
+    <table>
+    <thead>
+    <tr>
+        <th colspan="2" style="width: 350px;">Penggolongan sesuai kodefikasi barang</th>
+        <th rowspan="3" style="width: 50px;">Spesifikasi<br>Nama<br>Barang</th>
+        <th rowspan="3" style="width: 85px;">Merk / Type</th>
+        <th rowspan="3" style="width: 50px;">Jumlah<br>Barang</th>
+        <th rowspan="3" style="width: 50px;">Satuan<br>Barang</th>
+        <th rowspan="3" style="width: 100px;">Harga Satuan</th>
+        <th rowspan="3" style="width: 100px;">Total Nilai Barang</th>
+        <th rowspan="3" style="width: 50px;">Total<br>Biaya<br>Atribusi</th>
+        <th rowspan="3" style="width: 150px;">Nilai Perolehan Barang</th>
+        <th rowspan="3" style="width: 150px;">Harga Satuan Perolehan</th>
+        <th colspan="4">Sub Kegiatan dan Rekening Anggaran Belanja Daerah</th>
+        <th rowspan="3" style="width: 65px;">Tanggal<br>Perolehan</th>
+        <th colspan="3" style="width: 280px;">Dokumen Sumber Pengadaan</th>
+        <th rowspan="3" style="width: 85px;">Keterangan</th>
+    </tr>
+    <tr>
+        <th rowspan="2">Kode Barang</th>
+        <th rowspan="2" style="width: 90px">Nama Barang</th>
+        <th colspan="2">Sub Kegiatan</th>
+        <th colspan="2">Rekening Belanja Daerah</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <th style="width: 95px;">Kode Sub Kegiatan</th>
+        <th style="width: 150px">Nama Sub Kegiatan</th>
+        <th style="width: 90px;">Kode Rekening</th>
+        <th style="width: 150px;">Uraian Belanja</th>
+        <th>Bentuk<br>Kontrak</th>
+        <th>Nama<br>Penyedia</th>
+        <th style="width: 40px;">Nomor Kontrak</th>
+    </tr>
+    <tr>
+        <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+        <th>6</th><th>7</th><th>8 (5×7)</th><th>9</th>
+        <th>10 (8+9)</th><th>11 (10/5)</th>
+        <th>12</th><th>13</th><th>14</th><th>15</th>
+        <th>16</th><th>17</th><th>18</th><th>19</th><th>20</th>
+    </tr>
+    </thead>
+
+    <!-- BODY (TABLE DATA)-->
+
+    <tbody>
+    <tr>
+    <tr>
+    <td height="50px">&nbsp;00</td>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align:right;">-</td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: right;"></td>
+    <td></td>
+    <td style="text-align: left;"></td>
+    <td></td>
+    <td style="text-align: left;"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: left;">-</td>
+    </tr>
+    </tr>
+    </tbody>
+
+        <!-- FOOTER (TOTAL)-->
+    <tfoot>
+    <tr class="tfooter">
+        <th colspan="4" style="text-align: center;">TOTAL</th>
+        <td></td>
+        <td></td>
+        <td style="text-align:right;"></td>
+        <td style="text-align:right;"></td>
+        <td style="text-align:right;">-</td>
+        <td style="text-align:right;"></td>
+        <td style="text-align:right;"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tfoot>
+    </table>
+
+    <!-- SIGNATURE / TANDA TANGAN -->
+
+    <div style="width: 100%; margin-top: 30px; clear: both;">
+        
+    <div style="width: 100%; margin-top: 30px; clear: both;">
+        
+        <div style="float: right; text-align: center; width: 350px; font-size: 11px; line-height: 1.2; margin-right: 75px; font-size: 0.5em">
+            <p style="margin: 0; font-weight: bold;">MAPPI, 30 JUNI 2025</p>
+            <p style="margin: 0; font-weight: bold;">Pengguna Barang</p>
+            
+            <div style="margin-top: 50px;">
+                <p style="margin: 0; font-weight: bold; text-decoration: underline; white-space: nowrap;">FRANSISCUS XAVERIUS ALEXIUS, SE</p>
+                <p style="margin: 0; font-weight: bold;">NIP. 19710717 200112 1 005</p>
+            </div>
+        </div>
+    </div>
+    ';
+
+    return $cRet;
+    }
+
+    private function StructureLampiranIV122($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis) {
+         
+    $cRet .= '
+    <style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 7pt;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    th, td {
+        border: 0.5px solid #000;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: #bfbfbf;
+        font-weight: bold;
+    }
+    .header-table td {
+        border: none;
+        vertical-align: top;
+    }
+    .header-title {
+        text-align: center;
+        font-weight: bold;
+    }
+    .tfooter td{
+        background-color: #e0e0e0;
+        font-weight: bold;
+    }
+    </style>
+
+    <!-- HEADER LAPORAN -->
+    <br>
+    <br>
+    <table class="header-table" width="100%" style="margin-bottom: 10px;">
+    <tr>
+        <!-- LOGO + LOKASI -->
+        <td width="20%" style="text-align: left;">
+            <img src="public/images/Mappi_logo.png" width="43" style="margin-left: 45px; margin-bottom: 10px;"><br>
+            <span style="font-size: 7pt;">
+                <b>
+                Provinsi Papua Selatan<br>
+                Kabupaten Mappi
+                </b>
+            </span>
+        </td>
+
+        <!-- JUDUL -->
+        <td width="60%" class="header-title">
+            LAPORAN PENGADAAN BMD BERUPA ASET LANCAR PERSEDIAAN<br>
+            INTRAKOMTABEL<br>
+            KUASA PENGGUNA ANGGARAN ATAU PENGGUNA ANGGARAN<br>
+            BADAN PENGELOLAAN KEUANGAN DAN ASET DAERAH<br>
+            ' . strtoupper($inputBulan) .' (SEMESTER PERTAMA)<br>
+            TAHUN ' . $tahun .'
+        </td>
+
+        <!-- KOSONGKAN ATAU UNTUK SPASI -->
+        <td width="20%"></td>
+    </tr>
+    </table>
+
+    <!-- TABEL HEAD DATA -->
+    <table>
+    <thead>
+    <tr>
+        <th colspan="2" style="width: 350px;">Penggolongan sesuai kodefikasi barang</th>
+        <th rowspan="3" style="width: 50px;">Spesifikasi<br>Nama<br>Barang</th>
+        <th rowspan="3" style="width: 85px;">Merk / Type</th>
+        <th rowspan="3" style="width: 50px;">Jumlah<br>Barang</th>
+        <th rowspan="3" style="width: 50px;">Satuan<br>Barang</th>
+        <th rowspan="3" style="width: 100px;">Harga Satuan</th>
+        <th rowspan="3" style="width: 100px;">Total Nilai Barang</th>
+        <th rowspan="3" style="width: 50px;">Total<br>Biaya<br>Atribusi</th>
+        <th rowspan="3" style="width: 150px;">Nilai Perolehan Barang</th>
+        <th rowspan="3" style="width: 150px;">Harga Satuan Perolehan</th>
+        <th colspan="4">Sub Kegiatan dan Rekening Anggaran Belanja Daerah</th>
+        <th rowspan="3" style="width: 65px;">Tanggal<br>Perolehan</th>
+        <th colspan="3" style="width: 280px;">Dokumen Sumber Pengadaan</th>
+        <th rowspan="3" style="width: 85px;">Keterangan</th>
+    </tr>
+    <tr>
+        <th rowspan="2">Kode Barang</th>
+        <th rowspan="2" style="width: 90px">Nama Barang</th>
+        <th colspan="2">Sub Kegiatan</th>
+        <th colspan="2">Rekening Belanja Daerah</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <th style="width: 95px;">Kode Sub Kegiatan</th>
+        <th style="width: 150px">Nama Sub Kegiatan</th>
+        <th style="width: 90px;">Kode Rekening</th>
+        <th style="width: 150px;">Uraian Belanja</th>
+        <th>Bentuk<br>Kontrak</th>
+        <th>Nama<br>Penyedia</th>
+        <th style="width: 40px;">Nomor Kontrak</th>
+    </tr>
+    <tr>
+        <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+        <th>6</th><th>7</th><th>8 (5×7)</th><th>9</th>
+        <th>10 (8+9)</th><th>11 (10/5)</th>
+        <th>12</th><th>13</th><th>14</th><th>15</th>
+        <th>16</th><th>17</th><th>18</th><th>19</th><th>20</th>
+    </tr>
+    </thead>
+
+    <!-- BODY (TABLE DATA)-->
+
+    <tbody>
+    <tr>
+    <tr>
+    <td height="50px">&nbsp;</td>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"></td>
+    <td style="text-align: left;"></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align:right;">-</td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: right;"></td>
+    <td></td>
+    <td style="text-align: left;"></td>
+    <td></td>
+    <td style="text-align: left;"></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td style="text-align: left;">-</td>
+    </tr>
+    </tr>
+    </tbody>
+
+        <!-- FOOTER (TOTAL)-->
+    <tfoot>
+    <tr class="tfooter">
+        <th colspan="4" style="text-align: center;">TOTAL</th>
+        <td></td>
+        <td></td>
+        <td style="text-align:right;"></td>
+        <td style="text-align:right;"></td>
+        <td style="text-align:right;">-</td>
+        <td style="text-align:right;"></td>
+        <td style="text-align:right;"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tfoot>
+    </table>
+
+    <!-- SIGNATURE / TANDA TANGAN -->
+
+    <div style="width: 100%; margin-top: 30px; clear: both;">
+        
+    <div style="width: 100%; margin-top: 30px; clear: both;">
+        
+        <div style="float: right; text-align: center; width: 350px; font-size: 11px; line-height: 1.2; margin-right: 75px; font-size: 0.5em">
+            <p style="margin: 0; font-weight: bold;">MAPPI, ' . $hari . ' ' . strtoupper($bulan) . ' ' . $dTahun .'</p>
+            <p style="margin: 0; font-weight: bold;">Pengguna Barang</p>
+            
+            <div style="margin-top: 50px;">
+                <p style="margin: 0; font-weight: bold; text-decoration: underline; white-space: nowrap;">FRANSISCUS XAVERIUS ALEXIUS, SE</p>
+                <p style="margin: 0; font-weight: bold;">NIP. 19710717 200112 1 005</p>
+            </div>
+        </div>
+    </div>
+    ';
+
+    return $cRet;
+    }
+
+    function lap_pengeluaran(){
+       
+        $konfig     = $this->ambil_config();
+        $nmkab      = strtoupper($konfig['kabupaten']);
+        $kota       = strtoupper($konfig['kota']);
+        $logo       = $konfig['logo'];
+        $thn        = $this->session->userdata('ta_simbakda');
+        $unit_skpd  = $this->session->userdata('unit_skpd');
+        $tah        = $this->session->userdata('ta_simbakda');
+        $pilih      = $_REQUEST['pilih'];
+        $tampil     = $_REQUEST['tampil'];
+        $skpd       = $_REQUEST['skpd'];
+        $nmskpd     = $_REQUEST['nmskpd'];
+        $bidang     = $_REQUEST['bidang'];
+        $nmbid      = $_REQUEST['nmbid'];
+        $blnthn     = $_REQUEST['blnthn'];
+
+        $bulan  = $_REQUEST['bulan'];
+        $tahun  = $_REQUEST['tahun3'];
+        $dcetak=$tahun."-".$bulan."-".'31';
+        $last=date('Y-m-t',strtotime($dcetak));
+        $periodbulan = strtoupper($this->getBulan($bulan));
+
+        $pilctk     = $_REQUEST['pilctk'];
+        
+        $jenis      = $_REQUEST['jenis'];
+        $nmjenis    = $_REQUEST['nmjenis'];
+        //$jenis_brg  = strlen($jenis);
+
+        if($pilctk=='1' || $pilctk=='3'){
+            $xy=0;
+            $csqlttdpa=$this->db->query("SELECT nip,nama,jabatan FROM ttd WHERE ckey='QQ' AND skpd='$skpd'");
+            foreach($csqlttdpa->result() as $rowtd){
+                $nippa =$rowtd->nip;
+                $namapa=$rowtd->nama;
+                $jabatanpa=$rowtd->jabatan;
+                $xy++;        
+            }
+            if($xy==0){
+                $nippa      ='Belum Ada NIP';
+                $namapa     ='Belum Ada Nama';
+                $jabatanpa  ='Belum Ada Jabatan';
+            }
+            $yx=0;
+            $csqlttdbk=$this->db->query("SELECT nip,nama,jabatan FROM ttd WHERE ckey='BK' AND skpd='$skpd'");
+            foreach($csqlttdbk->result() as $rowtd){
+                $nipbk =$rowtd->nip;
+                $namabk=$rowtd->nama;
+                $jabatanbk=$rowtd->jabatan;
+                $yx++;        
+            }
+            if($yx==0){
+                $nipbk      ='Belum Ada NIP';
+                $namabk     ='Belum Ada Nama';
+                $jabatanbk  ='Belum Ada Jabatan';
+            }
+        }elseif($pilctk=='2'){
+            $xy=0;
+            $csqlttdpa=$this->db->query("SELECT nip,nama,jabatan FROM ttd WHERE ckey='QQ' AND skpd='$skpd' AND kd_lokasi='$bidang'");
+            foreach($csqlttdpa->result() as $rowtd){
+                $nippa =$rowtd->nip;
+                $namapa=$rowtd->nama;
+                $jabatanpa=$rowtd->jabatan;
+                $xy++;        
+            }
+            if($xy==0){
+                $nippa      ='Belum Ada NIP';
+                $namapa     ='Belum Ada Nama';
+                $jabatanpa  ='Belum Ada Jabatan';
+            }
+            $yx=0;
+            $csqlttdbk=$this->db->query("SELECT nip,nama,jabatan FROM ttd WHERE ckey='BK' AND skpd='$skpd' AND kd_lokasi='$bidang'");
+            foreach($csqlttdbk->result() as $rowtd){
+                $nipbk =$rowtd->nip;
+                $namabk=$rowtd->nama;
+                $jabatanbk=$rowtd->jabatan; 
+                $yx++;       
+            }
+            if($yx==0){
+                $nipbk      ='Belum Ada NIP';
+                $namabk     ='Belum Ada Nama';
+                $jabatanbk  ='Belum Ada Jabatan';
+            }
+            
+        }
+        
+        
+        $tglcetak   = $this->tanggal_indonesia($_REQUEST['tglcetak']);
+        
+        $cRet ='';
+        $cRet .= "<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"0\" cellspacing=\"0\" cellpadding=\"4\">";
+          $cRet .="
+            
+            <tr>
+                <td></td>
+                <td align=\"center\" colspan=\"16\" style=\"font-size:14px;border: solid 1px white;\"><B>LAPORAN PENGELUARAN BMD INTERNAL PENGGUNA BARANG <br>INTRAKOMTABEL<br>KUASA PENGGUNA BARANG ATAU PENGGUNA BARANG<br>BADAN PENGELOLAH KEUANGAN DAN ASET DAERAH<br>$bulan<br>TAHUN $tahun</B></td>
+            </tr><BR/><BR/><BR/></table>";
+        $cRet .= "<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"4\">";
+           //if ($skpd <>''){ 
+        //   $cRet .="
+        //     <tr>
+        //         <td align=\"left\" style=\"font-size:13px;\" width =\"10%\" >&ensp;&ensp;papua</td>
+        //         <td align=\"left\" style=\"font-size:13px;\"><B> </B></td>
+        //     </tr>";//} 
+        //   if ($pilctk=='2' || $pilctk=='3'){    
+        // $cRet .=" <tr>
+        //         <td align=\"left\" style=\"font-size:13px;\" width =\"15%\" >&ensp;&ensp;papua</td>
+        //         <td align=\"left\" style=\"font-size:13px;\">:<B> $bidang  $nmbid</B></td>
+        //     </tr>";}
+          $cRet .="<tr>
+                <td align=\"left\" style=\"font-size:13px;\">Provinsi Papua Selatan</td>
+                <td align=\"left\" style=\"font-size:13px;\"></td>
+            </tr>";
+        if($pilctk=='1' || $pilctk=='2'){
+            if($blnthn=='01'){
+                $cRet .="<tr>
+                <td align=\"left\" style=\"font-size:13px;\">$nmkab</td>
+            </tr>";
+            }else{
+                $cRet .="<tr>
+                <td align=\"left\" style=\"font-size:13px;\">&ensp;&ensp;PERIODE</td>
+                <td align=\"left\" style=\"font-size:13px;\">: $tahun1 s.d $tahun</td>
+            </tr>";
+            }
+        }else {
+            $cRet .="<tr>
+                <td align=\"left\" style=\"font-size:13px;\">&ensp;&ensp;PERIODE</td>
+                <td align=\"left\" style=\"font-size:13px;\">: $tahun1 s/d $tahun2</td>
+            </tr>";
+        }
+           $cRet .="<tr>
+                        <td align=\"left\" style=\"font-size:13px;\">&ensp;&ensp;</td>
+                        <td align=\"left\" style=\"font-size:13px;\"></td>
+                    </tr>
+                </table>";
+                
+        $cRet .="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"1\" cellspacing=\"1\" cellpadding=\"4\">
+            <thead>
+            <tr>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" colspan=\"2\" width=\"10%\" style=\"font-size:12px\">Penggolongan sesuia kodefikasi barang</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Spesifikasi <br> Nama <br> Barang</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Jumlah Barang</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Satuan Barang</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Harga Barang</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Total Nilai Barang</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Nilai Akumulasi Penyusutan Atau Atmortisasi</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Nilai Buku</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"10%\" style=\"font-size:12px\">Tanggal Bulan Tahun<br>Perolehan</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"10%\" style=\"font-size:12px\">Cara <br> Perolehan</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" colspan=\"2\" width=\"30%\" style=\"font-size:12px\">BAST</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" rowspan=\"2\" width=\"5%\" style=\"font-size:12px\">Keterangan</td>
+            </tr>
+            
+            <tr>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"15%\" style=\"font-size:12px\">Kode Barang</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"5%\" style=\"font-size:12px\">Nama Barang</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"15%\" style=\"font-size:12px\">Nomor</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" width=\"15%\" style=\"font-size:12px\">Tanggal</td>
+                
+            </tr>
+            
+            <tr>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">1</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">2</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">3</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">4</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">5</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">6</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">7</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">8</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">9</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">10</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">11</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">12</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">13</td>
+                <td align=\"center\" bgcolor=\"#CCCCCC\" style=\"font-size:10px\">14</td>
+            </tr>
+             </thead>
+             
+                ";
+
+
+            $tglreg     = "tgl_reg<='$last'";
+            $tglmutasi  = "tgl_mutasi>='$last'";
+            $tglpindah  = "tgl_pindah>='$last'";
+            $tglhapus   = "tgl_hapus>='$last'";
+            $tglriwayat = "tgl_riwayat>='$last'";
+            $tgl_kap    = "c.tgl_kap<='$last'";
+            
+            if($pilctk=='1'){
+                $kdskpd= "kd_skpd='$skpd'";
+            }else{
+                $kdskpd= "kd_skpd='$skpd' AND kd_unit='$bidang'";
+            }
+
+            $jenis_brg="and left(a.kd_brg,2)='$jenis'";           
+
+            //     $csql="SELECT a.id_barang,kd_bidang AS kd_brg,(SELECT nm_bidang FROM mbidang WHERE bidang=kd_bidang)AS nm_brg,
+                    
+            //         IF(a.tahun='2015',1,(2015-a.tahun+1)) AS th_lalu,                    
+            //         IF(a.tahun='2015',0,(CASE 
+            //         WHEN (TRIM(a.masa_manfaat)-(2015-a.tahun))=1 THEN a.nilai-CAST((a.nilai/TRIM(a.masa_manfaat)) AS DECIMAL(18,2))
+            //         WHEN (TRIM(a.masa_manfaat)-(2015-a.tahun))>1 THEN CAST((2015-a.tahun)*(a.nilai/TRIM(a.masa_manfaat)) AS DECIMAL(18,2))
+            //         WHEN (TRIM(a.masa_manfaat)-(2015-a.tahun))<1 THEN a.nilai
+            //         END)) AS tot_th_belum, 
+            //         (CASE WHEN (TRIM(a.masa_manfaat+(SELECT IFNULL(SUM(c.tmbh_manfaat),0)FROM trdkibb_kap b JOIN trkib_b_kap c ON b.no_bukti=c.no_bukti AND b.kd_skpd=c.kd_skpd AND b.kd_unit=c.kd_unit
+            //         WHERE b.kd_skpd=a.kd_skpd AND b.kd_unit=a.kd_unit AND YEAR(c.tgl_kap)<='2015' AND b.id_barang=a.id_barang))-(2015-a.tahun))>=1 THEN CAST((a.nilai/TRIM(a.masa_manfaat)) AS DECIMAL(18,2))
+            //         WHEN (TRIM(a.masa_manfaat)-(2015-a.tahun))<1 THEN 0 END)
+            //         AS penyusutan_pertahun
+            //         FROM trkib_b a
+            //         LEFT JOIN mbarang b ON b.kd_brg=a.kd_brg 
+            //         LEFT JOIN mbarang_umur c ON c.kd_barang=LEFT(a.kd_brg,8)
+
+            //         WHERE a.kd_skpd='$skpd' 
+            //         AND YEAR(a.tgl_reg) BETWEEN '1945' AND '2015' $jenis_brg
+            //         AND (a.no_mutasi IS NULL OR a.no_mutasi='' OR YEAR(a.tgl_mutasi)>'2015') 
+            //         AND (a.no_pindah IS NULL OR a.no_pindah='' OR YEAR(a.tgl_pindah)>'2015') 
+            //         AND (a.no_hapus IS NULL OR a.no_hapus='' OR YEAR(a.tgl_hapus)>'2015')
+            //         AND (a.kd_riwayat IS NULL OR a.kd_riwayat='' OR a.kd_riwayat='9' OR YEAR(a.tgl_riwayat)>'2015') 
+            //         ORDER BY a.kd_brg,a.tahun,a.no_reg";
+       
+            //      $hasil = $this->db->query($csql);
+            //      $totalsel=0;$tot_susut_per_tahun=0;$tot_susut_thn_lalu=0;$tot_susut_thn_ini=0;$tot_nb=0;
+            //      $i=0;
+                //  foreach ($hasil->result() as $row)
+                // {                
+                //     $cid_barang = $row->id_barang;
+                //     $cth_lalu = $row->th_lalu * 12;                
+                //     $susut_per_tahun = $row->penyusutan_pertahun;
+                //     $susut_thn_lalu = $row->tot_th_belum;
+                //     $susut_thn_ini = $susut_thn_lalu+$susut_per_tahun;
+
+             
+                    $sql = "SELECT * FROM lap_bmd_pengeluaran";
+                     $hasil2 = $this->db->query($sql);
+
+                     foreach ($hasil2->result() as $row2)
+                        {
+                            $kd_brg         = $row2->kd_brg;
+                            $nm_brg         = $row2->nm_brg;
+                            // $pskb_kdbrg     = $row2->pskb_kdbrg;
+                            // $spek_brg       = $row2->spek_brg;
+                            // $spek_lain      = $row2->spek_lain;
+                            // $jml_brg        = $row2->jml_brg;
+                            // $sat_brg        = $row2->sat_brg;
+                            // $hrg_brg        = $row2->hrg_brg;
+                            // $ttl_nilai_brg  = $row2->ttl_nilai_brg;
+                            // $nilai_akm_susut= $row2->nilai_akm_susut;
+                            // $nilai_buku     = $row2->nilai_buku;
+                            // $tgl_bln_thn_peroleh = $row2->tgl_bln_thn_peroleh;
+                            // $cara_peroleh        = $row2->cara_peroleh;
+                            // $bast                = $row2->bast;
+                            // $no                  = $row2->no;
+                            // $tgl                 = $row2->tgl;
+                            // $ket                 = $row2->ket;
+                          //  $nilai      = number_format($row2->nilai,2,',','.');
+                           // $keterangan = $row2->keterangan;
+
+                            //$cpaket = $row2->pake;
+                            //if ($cpaket == NULL){
+                            // $cpake = $row2->pake1;
+                            // }else{
+                            // $cpake = $row2->pake;
+                            // }
+
+                            // $cbulan_pake_ini = $row2->bulan_lalu;
+                            // $cbulan_lalu = $cbulan_pake_ini + $cth_lalu;                            
+                            
+                            // $cakum_penyusutan_bulan = $row2->akum_penyusutan_bulan;
+                            // $cpenyusutan_bulan = $row2->penyusutan_bulan;
+
+                            // $cumur_bulan_baru = $row2->umur_bulan_baru;
+                            // if($cumur_bulan_baru == 0){
+                            // $cumur_bulan = $row2->umur_bulan ;
+                            // }else{
+                            // $cumur_bulan = $row2->umur_bulan_baru ;
+                            // }
+
+                            // if($cbulan_lalu < $cumur_bulan){
+                            //     if($cpake<=$cbulan_lalu)
+                            //     { 
+                            //         $bln_lalu = ($cpake*$cpenyusutan_bulan)+($cakum_penyusutan_bulan*($cbulan_lalu-$cpake)) ;
+                            //         $bln_ini = $row2->akum_penyusutan_bulan + $bln_lalu;
+                            //         $penyusutan_bulan = $row2->akum_penyusutan_bulan;
+                            //     }else{
+                            //         if($cumur_bulan>=$cbulan_lalu){
+                            //         $bln_lalu=  $susut_thn_ini + $row2->tot_bln_belum ;
+                            //         }else{
+                            //         $bln_lalu= $row2->tot_bln_belum ;    
+                            //         }                                                   
+                            //         $bln_ini = $row2->penyusutan_bulan + $bln_lalu;                        
+                            //         $penyusutan_bulan = $row2->penyusutan_bulan;
+                            //     }
+                            // }else{
+                            //     $bln_lalu= $row2->nilai ;
+                            //     $bln_ini = 0 + $bln_lalu;
+                            //     $penyusutan_bulan = 0;
+                            // }
+
+                            // $tot_buku  = $row2->nilai - $bln_ini; 
+
+                            //     if(strlen($kd_brg)!=5 && strlen($jenis)==2){
+                            //         $i++;
+
+                            //         $totalsel           = $totalsel+$row2->nilai;
+                            //         $tot_susut_per_tahun= $tot_susut_per_tahun+$penyusutan_bulan;
+                            //         $tot_susut_thn_lalu = $tot_susut_thn_lalu+$bln_lalu;
+                            //         $tot_susut_thn_ini  = $tot_susut_thn_ini+$bln_ini;
+                            //         $tot_nb             = $tot_nb+$tot_buku;                        
+                            //     }
+
+                                $cRet .="<tr>
+                                            <td align=\"center\" width=\"2%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$kd_brg</td>
+                                            <td align=\"left\" width=\"15%\" style=\"font-size:11px\">$nm_brg</td>
+                                            <td align=\"center\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"center\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"5%\" style=\"font-size:11px\"></td>
+                                            <td align=\"left\" width=\"15%\" style=\"font-size:11px\"></td>
+                                            
+                                            
+                                            
+                                            
+                                        </tr>";
+                        }                       
+               // }
+                //awal thn kib b thn jln
+                // $csql_ini="SELECT a.id_barang,kd_bidang AS kd_brg,(SELECT nm_bidang FROM mbidang WHERE bidang=kd_bidang)AS nm_brg,
+                //     IF(a.tahun='$tahun',1,('$tahun'-a.tahun+1)) AS th_lalu,                    
+                //     IF(a.tahun='$tahun',0,(CASE 
+                //     WHEN (TRIM(a.masa_manfaat)-('$tahun'-a.tahun))=1 THEN a.nilai-CAST((a.nilai/TRIM(a.masa_manfaat)) AS DECIMAL(18,2))
+                //     WHEN (TRIM(a.masa_manfaat)-('$tahun'-a.tahun))>1 THEN CAST(('$tahun'-a.tahun)*(a.nilai/TRIM(a.masa_manfaat)) AS DECIMAL(18,2))
+                //     WHEN (TRIM(a.masa_manfaat)-('$tahun'-a.tahun))<1 THEN a.nilai
+                //     END)) AS tot_th_belum, 
+                //     (CASE WHEN (TRIM(a.masa_manfaat+(SELECT IFNULL(SUM(c.tmbh_manfaat),0)FROM trdkibb_kap b JOIN trkib_b_kap c ON b.no_bukti=c.no_bukti AND b.kd_skpd=c.kd_skpd AND b.kd_unit=c.kd_unit
+                //     WHERE b.kd_skpd=a.kd_skpd AND b.kd_unit=a.kd_unit AND c.tgl_kap BETWEEN '2016-1-01' AND '$last' AND b.id_barang=a.id_barang))-('$tahun'-a.tahun))>=1 THEN CAST((a.nilai/TRIM(a.masa_manfaat)) AS DECIMAL(18,2))
+                //     WHEN (TRIM(a.masa_manfaat)-('$tahun'-a.tahun))<1 THEN 0 END)
+                //     AS penyusutan_pertahun
+                //     FROM trkib_b a
+                //     LEFT JOIN mbarang b ON b.kd_brg=a.kd_brg 
+                //     LEFT JOIN mbarang_umur c ON c.kd_barang=LEFT(a.kd_brg,8)
+
+                //     WHERE a.kd_skpd='$skpd' 
+                //     AND a.tgl_reg BETWEEN '2016-1-01' AND '$last' $jenis_brg
+                //     AND (a.no_mutasi IS NULL OR a.no_mutasi='' OR YEAR(a.tgl_mutasi)>'$tahun') 
+                //     AND (a.no_pindah IS NULL OR a.no_pindah='' OR YEAR(a.tgl_pindah)>'$tahun') 
+                //     AND (a.no_hapus IS NULL OR a.no_hapus='' OR YEAR(a.tgl_hapus)>'$tahun')
+                //     AND (a.kd_riwayat IS NULL OR a.kd_riwayat='' OR a.kd_riwayat='9' OR YEAR(a.tgl_riwayat)>'$tahun')ORDER BY a.kd_brg,a.tahun,a.no_reg";
+       
+                //  $hasil_ini = $this->db->query($csql_ini);
+                //  foreach ($hasil_ini->result() as $row)
+                // {                
+                //     $cid_barang_b = $row->id_barang;
+                //     $cth_lalu_b = $row->th_lalu * 12;                
+                //     $susut_per_tahun_b = $row->penyusutan_pertahun;
+                //     $susut_thn_lalu_b = $row->tot_th_belum;
+                //     $susut_thn_ini_b = $susut_thn_lalu_b+$susut_per_tahun_b;
+
+             
+                //     $sql_ini = "SELECT a.id_barang,a.kd_brg,b.nm_brg,a.no_reg,a.merek,a.silinder,a.kd_bahan,a.pabrik,a.no_rangka,a.no_mesin,
+                //         a.no_polisi,a.no_bpkb,IF(LENGTH(a.id_barang)>='75','MUTASI',a.asal)AS asal,a.keterangan,a.no_urut,a.tahun,
+                //         TRIM(a.masa_manfaat) AS umur_tahun,TRIM(a.masa_manfaat*12)AS umur_bulan,
+
+                //         IF(a.id_barang=(SELECT DISTINCT(id_barang) FROM trkib_b_kap WHERE kd_skpd=a.kd_skpd AND id_barang=a.id_barang AND tgl_kap BETWEEN '2016-1-01' AND '$last' GROUP BY id_barang),
+                //         (TRIM(a.masa_manfaat*12)+(SELECT (IFNULL(SUM(c.tmbh_manfaat),0)*12) FROM trdkibb_kap b JOIN trkib_b_kap c ON b.no_bukti=c.no_bukti AND b.kd_skpd=c.kd_skpd AND b.kd_unit=c.kd_unit
+                //         WHERE b.kd_skpd=a.kd_skpd AND b.kd_unit=a.kd_unit AND c.tgl_kap BETWEEN '2016-1-01' AND '$last' AND b.id_barang=a.id_barang))
+                //         ,0)AS umur_bulan_baru,
+
+                //         (SELECT (((YEAR(c.tgl_kap)-YEAR(a.tgl_oleh)+1)*12)-(MONTH(a.tgl_reg)-MONTH(c.tgl_kap)+1))
+                //         FROM trdkibb_kap b JOIN trkib_b_kap c ON b.no_bukti=c.no_bukti AND b.kd_skpd=c.kd_skpd AND b.kd_unit=c.kd_unit
+                //         WHERE b.kd_skpd=a.kd_skpd AND b.kd_unit=a.kd_unit AND YEAR(c.tgl_kap)<='$tahun' AND b.id_barang=a.id_barang) AS pake,
+
+                //         (SELECT (('$tahun'-YEAR(a.tgl_oleh))*12) - (MONTH(a.tgl_reg)-'$bulan')+1) AS pake1, 
+
+                //         CAST(a.nilai+(SELECT IFNULL(SUM(b.nilai_kap),0)FROM trdkibb_kap b JOIN trkib_b_kap c ON b.no_bukti=c.no_bukti AND b.kd_skpd=c.kd_skpd AND b.kd_unit=c.kd_unit
+                //         WHERE b.kd_skpd=a.kd_skpd AND b.kd_unit=a.kd_unit AND c.tgl_kap BETWEEN '2016-1-01' AND '$last' AND b.id_barang=a.id_barang) AS DECIMAL(18,2))AS nilai,
+
+                //         TRIM('$bulan'-MONTH(a.tgl_oleh)+(('$tahun'-2016)*12))
+                //         AS bulan_lalu,
+
+                //         (CASE WHEN ((a.masa_manfaat*12)-(('$bulan'-MONTH(a.tgl_oleh)+(('$tahun'-YEAR(a.tgl_oleh))*12))))>=0 THEN TRUNCATE(CAST((a.nilai/(a.masa_manfaat*12)) AS DECIMAL(18,9)),2)
+                //         WHEN ((a.masa_manfaat*12)-(('$bulan'-MONTH(a.tgl_oleh)+(('$tahun'-YEAR(a.tgl_oleh))*12))))<0 THEN 0 END)AS penyusutan_bulan,
+
+                //         (CASE 
+                //         WHEN TRIM(a.masa_manfaat*12)-TRIM('$bulan'-MONTH(a.tgl_oleh)+((('$tahun')-YEAR(a.tgl_oleh))*12))>=0 
+                //         THEN TRUNCATE(CAST(TRIM('$bulan'-MONTH(a.tgl_oleh)+((('$tahun')-2016)*12))*(a.nilai/TRIM(a.masa_manfaat*12)) AS DECIMAL(18,9)),2)
+                //         WHEN TRIM(a.masa_manfaat*12)-TRIM('$bulan'-MONTH(a.tgl_oleh)+(('$tahun'-YEAR(a.tgl_oleh))*12))<0 
+                //         THEN a.nilai
+                //         END)
+                //         AS tot_bln_belum,
+
+                //         (CASE WHEN ((a.masa_manfaat*12)-(('$bulan'-MONTH(a.tgl_oleh)+(('$tahun'-YEAR(a.tgl_oleh))*12))))>=0 
+                //         THEN TRUNCATE(CAST((a.nilai-((a.nilai/(a.masa_manfaat*12))*
+                //         (SELECT (((YEAR(c.tgl_kap)-YEAR(a.tgl_oleh)+1)*12)-(MONTH(a.tgl_reg)-MONTH(c.tgl_kap)+1))
+                //         FROM trdkibb_kap b JOIN trkib_b_kap c ON b.no_bukti=c.no_bukti AND b.kd_skpd=c.kd_skpd AND b.kd_unit=c.kd_unit
+                //         WHERE b.kd_skpd=a.kd_skpd AND b.kd_unit=a.kd_unit AND c.tgl_kap BETWEEN '2016-1-01' AND '$last' AND b.id_barang=a.id_barang) -
+                //         (SELECT IFNULL(SUM(b.nilai_kap),0)FROM trdkibb_kap b JOIN trkib_b_kap c ON b.no_bukti=c.no_bukti AND b.kd_skpd=c.kd_skpd AND b.kd_unit=c.kd_unit
+                //         WHERE b.kd_skpd=a.kd_skpd AND b.kd_unit=a.kd_unit AND c.tgl_kap BETWEEN '2016-1-01' AND '$last' AND b.id_barang=a.id_barang))) / 
+                //         ((a.masa_manfaat*12) + (SELECT (IFNULL(SUM(c.tmbh_manfaat),0)*12) FROM trdkibb_kap b JOIN trkib_b_kap c ON b.no_bukti=c.no_bukti AND b.kd_skpd=c.kd_skpd AND b.kd_unit=c.kd_unit
+                //         WHERE b.kd_skpd=a.kd_skpd AND b.kd_unit=a.kd_unit AND c.tgl_kap BETWEEN '2016-1-01' AND '$last' AND b.id_barang=a.id_barang) -
+                //         (SELECT (((YEAR(c.tgl_kap)-YEAR(a.tgl_oleh)+1)*12)-(MONTH(a.tgl_reg)-MONTH(c.tgl_kap)+1))
+                //         FROM trdkibb_kap b JOIN trkib_b_kap c ON b.no_bukti=c.no_bukti AND b.kd_skpd=c.kd_skpd AND b.kd_unit=c.kd_unit
+                //         WHERE b.kd_skpd=a.kd_skpd AND b.kd_unit=a.kd_unit AND YEAR(c.tgl_kap)<='$tahun' AND b.id_barang=a.id_barang)) AS DECIMAL(18,9)),2)
+                //         WHEN (TRIM(a.masa_manfaat*12)-TRIM(('$bulan'-MONTH(a.tgl_oleh)+(('$tahun'-YEAR(a.tgl_oleh))*12))))<0 THEN 0 END) AS akum_penyusutan_bulan,
+                //         a.kondisi
+
+                //         FROM trkib_b a
+                //         LEFT JOIN mbarang b ON b.kd_brg=a.kd_brg 
+                //         LEFT JOIN mbarang_umur c ON c.kd_barang=LEFT(a.kd_brg,8)
+
+                //         WHERE a.kd_skpd='$skpd' AND a.id_barang ='$cid_barang_b' 
+                //         AND a.tgl_reg BETWEEN '2016-1-01' AND '$last'
+                //         AND (a.no_mutasi IS NULL OR a.no_mutasi='' OR tgl_mutasi>='$last') 
+                //         AND (a.no_pindah IS NULL OR a.no_pindah='' OR tgl_pindah>='$last') 
+                //         AND (a.no_hapus IS NULL OR a.no_hapus='' OR tgl_hapus>='$last')
+                //         AND (a.kd_riwayat IS NULL OR a.kd_riwayat='' OR a.kd_riwayat='9' OR tgl_riwayat>='$last') ORDER BY a.kd_brg,a.tahun";
+                       
+                //      $hasil2_ini = $this->db->query($sql_ini);
+
+                //      foreach ($hasil2_ini->result() as $row2)
+                //         {
+                //             $kd_brg_b     = $row2->kd_brg;
+                //             $nm_brg_b     = $row2->nm_brg;
+                //             $no_reg_b     = $row2->no_reg;
+                //             $merek_b      = $row2->merek;
+                //             $silinder_b   = $row2->silinder;
+                //             $kd_bahan_b   = $row2->kd_bahan;
+                //             $tahunn_b     = $row2->tahun;
+                //             $pabrik_b     = $row2->pabrik;
+                //             $no_rangka_b  = $row2->no_rangka;
+                //             $no_mesin_b   = $row2->no_mesin;
+                //             $no_polisi_b  = $row2->no_polisi;
+                //             $no_bpkb_b    = $row2->no_bpkb;
+                //             $asal_b       = $row2->asal;
+                //             $nilai_b      = number_format($row2->nilai,2,',','.');
+                //             $keterangan_b = $row2->keterangan;
+
+                //             $cpaket_b = $row2->pake;
+                //             if ($cpaket_b == NULL){
+                //             $cpake_b = $row2->pake1;
+                //             }else{
+                //             $cpake_b = $row2->pake;
+                //             }
+
+                //             $cbulan_pake_ini_b = $row2->bulan_lalu;
+                //             $cbulan_lalu_b = $cbulan_pake_ini_b;                            
+                            
+                //             $cakum_penyusutan_bulan_b = $row2->akum_penyusutan_bulan;
+                //             $cpenyusutan_bulan_b = $row2->penyusutan_bulan;
+
+                //             $cumur_bulan_baru_b = $row2->umur_bulan_baru;
+                //             if($cumur_bulan_baru_b == 0){
+                //             $cumur_bulan_b = $row2->umur_bulan ;
+                //             }else{
+                //             $cumur_bulan_b = $row2->umur_bulan_baru ;
+                //             }
+
+                //             if($cbulan_lalu_b < $cumur_bulan_b){
+                //                 if($cpake_b<=$cbulan_lalu_b)
+                //                 { 
+                //                     $bln_lalu_b = ($cpake_b*$cpenyusutan_bulan_b)+($cakum_penyusutan_bulan_b*($cbulan_lalu_b-$cpake_b)) ;
+                //                     $bln_ini_b = $row2->akum_penyusutan_bulan + $bln_lalu_b;
+                //                     $penyusutan_bulan_b = $row2->akum_penyusutan_bulan;
+                //                 }else{
+                //                     $bln_lalu_b= $row2->tot_bln_belum ;                                        
+                //                     $bln_ini_b = $row2->penyusutan_bulan + $bln_lalu_b;                        
+                //                     $penyusutan_bulan_b = $row2->penyusutan_bulan;
+                //                 }
+                //             }else{
+                //                 $bln_lalu_b= $row2->nilai ;
+                //                 $bln_ini_b = 0 + $bln_lalu_b;
+                //                 $penyusutan_bulan_b = 0;
+                //             }
+
+                //             $tot_buku_b  = $row2->nilai - $bln_ini_b; 
+
+                //                 if(strlen($kd_brg_b)!=5 && strlen($jenis)==2){
+                //                     $i++;
+
+                //                     $totalsel           = $totalsel+$row2->nilai;
+                //                     $tot_susut_per_tahun= $tot_susut_per_tahun+$penyusutan_bulan_b;
+                //                     $tot_susut_thn_lalu = $tot_susut_thn_lalu+$bln_lalu_b;
+                //                     $tot_susut_thn_ini  = $tot_susut_thn_ini+$bln_ini_b;
+                //                     $tot_nb             = $tot_nb+$tot_buku_b;                        
+                //                 }
+
+                //                 $cRet .="<tr>
+                //                             <td align=\"center\" width=\"2%\" style=\"font-size:11px\">$i</td>
+                //                             <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$kd_brg_b</td>
+                //                             <td align=\"left\" width=\"15%\" style=\"font-size:11px\">$nm_brg_b</td>
+                //                             <td align=\"center\" width=\"5%\" style=\"font-size:11px\">$no_reg_b</td>
+                //                             <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$merek_b</td>
+                //                             <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$silinder_b</td>
+                //                             <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$kd_bahan_b</td>
+                //                             <td align=\"center\" width=\"5%\" style=\"font-size:11px\">$tahunn_b</td>
+                //                             <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$pabrik_b</td>
+                //                             <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$no_rangka_b</td>
+                //                             <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$no_mesin_b</td>
+                //                             <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$no_polisi_b</td>
+                //                             <td align=\"left\" width=\"5%\" style=\"font-size:11px\">$no_bpkb_b</td>
+                //                             <td align=\"left\" width=\"15%\" style=\"font-size:11px\">$asal_b</td>
+                //                             <td align=\"right\" width=\"5%\" style=\"font-size:11px\">$nilai_b</td>
+                //                             <td align=\"center\" width =\"2%\" style=\"font-size:11px;\">$cumur_bulan_b</td>
+                //                             <td align=\"center\" width =\"2%\" style=\"font-size:11px;\">$row2->kondisi</td>
+                //                             <td align=\"right\" width =\"10%\" style=\"font-size:11px;\">".number_format($bln_lalu_b,2,',','.')."</td>
+                //                             <td align=\"right\" width =\"10%\" style=\"font-size:11px;\">".number_format($penyusutan_bulan_b,2,',','.')."</td>
+                //                             <td align=\"right\" width =\"10%\" style=\"font-size:11px;\">".number_format($bln_ini_b,2,',','.')."</td>
+                //                             <td align=\"right\" width =\"10%\" style=\"font-size:11px;\">".number_format($tot_buku_b,2,',','.')."</td>
+                //                             <td align=\"left\" width=\"13%\" style=\"font-size:11px\">$keterangan_b</td>
+                //                         </tr>";
+                //         }                       
+                // }
+                //akhir thn kib b thn jln
+
+               $cRet .="<tr>
+                        <td bgcolor=\"#CCCCCC\" colspan=\"3\" align=\"center\" width =\"2%\" style=\"font-size:11px\"><b>Jumlah</b></td>
+                        <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b>".number_format($totalsel,2,',','.')."</b></td>
+                        <td bgcolor=\"#CCCCCC\" colspan=\"2\" width =\"5%\" align=\"left\" style=\"font-size:11px\"></td>
+                        <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b></b></td>
+                        <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b></b></td>
+                        <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b></b></td>
+                        <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b></b></td>
+                        <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b></b></td>
+                        <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b></b></td>
+                        <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b></b></td>
+                        <td bgcolor=\"#CCCCCC\" align=\"right\" width =\"5%\" style=\"font-size:11px\"><b></b></td>
+                        
+                        
+                        
+                    </tr>";                               
+
+            
+          $cRet .="</table>"; 
+  
+         $cRet.="<table style=\"border-collapse:collapse;\" width=\"100%\" align=\"center\" border=\"0\" cellspacing=\"1\" cellpadding=\"1\">
+            <tr>
+                <td align=\"center\" colspan=\"5\"   style=\"font-size:12px\">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</td>
+            </tr>
+            <tr>
+                <td width =\"80%\" colspan=\"4\" align=\"center\"   style=\"font-size:12px\"></td>
+                <td width =\"20%\" align=\"center\"   style=\"font-size:10px\">$kota, $tglcetak</td>
+            </tr>
+            <tr>
+                <td width =\"80%\" colspan=\"4\" align=\"center\"   style=\"font-size:12px\"></td>
+                <td align=\"center\"   style=\"font-size:12px\">Pengguna Barang</td>
+            </tr>
+            <tr>
+                <td align=\"center\" colspan=\"5\"   style=\"font-size:12px\">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</td>
+            </tr>
+            <tr>
+                <td align=\"center\" colspan=\"5\"   style=\"font-size:12px\">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</td>
+
+            </tr>
+            <tr>
+                <td align=\"center\" colspan=\"5\"   style=\"font-size:12px\">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</td>
+
+            </tr>
+            <tr>
+                <td width =\"80%\" colspan=\"4\" align=\"center\"   style=\"font-size:12px\"></td>
+                <td align=\"center\"   style=\"font-size:12px\">(<u> $namabk </u>)</td>
+            </tr>
+            <tr>
+                <td width =\"80%\" colspan=\"4\" align=\"center\"   style=\"font-size:12px\"></td>
+                <td align=\"center\"   style=\"font-size:12px\">&ensp;NIP. $nipbk</td>
+            </tr>
+         </tr>";
+            
+        $cRet .=       " </table>";
+        $data['prev']= $cRet;
+        //$kertas='LEGAL';  
+        
+        $test = str_replace(str_split('\\/:*?"<>|,'), ' ', $nmskpd);
+        $skpdx = ucfirst(strtolower($test));
+        $judul  ="Laporan KIB B - $skpdx.pdf";
+        $this->template->set('title', 'Laporan KIB B');  
+        switch($pilih) {
+        case 1;
+             //echo $cRet;
+            //echo memory_get_peak_usage();
+             //$this->create_pdf($cRet);
+             $this->_mpdftn('', $cRet, 10, 10, 10, '1','','');
+            
+        break;
+        case 2;        
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename= $judul - $test.xls");
+            $this->load->view('transaksi/excel', $data);
+        break;
+        case 3;     
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-word");
+            header("Content-Disposition: attachment; filename= $judul - $test.doc");
+           $this->load->view('transaksi/excel', $data);
+        break;
+        case 4;     
+            echo $cRet;
+        break;
+        }   
+    }     
+
+      function CetakLampiranIVB11() {
+// ADIT LAPORAN PENGGUNAAN
+    
+
+    if($this->auth->is_logged_in() == false){
+        redirect(site_url().'/welcome/login');
+    }
+         
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+  
+    $laporan = $this->input->get('laporan');
+
+    $tahun   = $this->input->get('tahun');
+    $tgl     = $this->input->get('tgl');
+    $inpBulan  = $this->input->get('bulan');
+    $laporan = $this->input->get('laporan');
+    $date    = new DateTime($tgl); // <--- MENGAMBIL FORMAT TGL DARI INPUT TANGGAL CETAK
+    $hari    = $date->format('d'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL TANGGAL SAJA -> 31
+    $dBulan  = $date->format('m'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA BULAN SAJA -> 12
+    $jenis = $this->input->get('jenis');
+    $dTahun  = $date->format(20 . 'y'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA TAHUN SAJA -> 25 (20 . 25) = 2025
+
+    $inputBulan = $this->db                        
+    ->get_where('bulan', ['n_bulan' => $inpBulan])
+    ->row('nama_bulan') ?? '-';                    
+
+
+    $bulan = $this->db
+    ->get_where('bulan', ['n_bulan' => $dBulan])
+    ->row('nama_bulan') ?? '-';
+
+    $cRet = $this->StructureLampiranIV122($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis);
+
+    // 🔹 Bersihkan buffer (WAJIB untuk PDF)
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+  switch ($jenis) {
+
+        case 'pdf':
+
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
+            require_once APPPATH . '3rdparty/mpdf/mpdf.php';
+
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A3-L',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 15
+            ]);
+
+            $mpdf->SetTitle("LAMPIRAN IV.1.2.2");
+            $mpdf->WriteHTML($cRet);
+            $mpdf->Output('Lampiran'.$laporan.'.pdf', 'I');
+            exit;
+
+        break;
+
+
+        case 'excel':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".xls");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'word':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-word");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".doc");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'html':
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        default:
+            show_error('Format cetak tidak dikenal');
+        break;
+         }
+        } 
+
+    function cetakLampiranIVB21() {
+  // ADIT LAPORAN PENGGUNAAN
+    
+
+    if($this->auth->is_logged_in() == false){
+        redirect(site_url().'/welcome/login');
+    }
+         
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+  
+    $laporan = $this->input->get('laporan');
+
+    $tahun   = $this->input->get('tahun');
+    $tgl     = $this->input->get('tgl');
+    $inpBulan  = $this->input->get('bulan');
+    $laporan = $this->input->get('laporan');
+    $date    = new DateTime($tgl); // <--- MENGAMBIL FORMAT TGL DARI INPUT TANGGAL CETAK
+    $hari    = $date->format('d'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL TANGGAL SAJA -> 31
+    $dBulan  = $date->format('m'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA BULAN SAJA -> 12
+    $jenis = $this->input->get('jenis');
+    $dTahun  = $date->format(20 . 'y'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA TAHUN SAJA -> 25 (20 . 25) = 2025
+
+    $inputBulan = $this->db                        
+    ->get_where('bulan', ['n_bulan' => $inpBulan])
+    ->row('nama_bulan') ?? '-';                    
+
+
+    $bulan = $this->db
+    ->get_where('bulan', ['n_bulan' => $dBulan])
+    ->row('nama_bulan') ?? '-';
+
+    $cRet = $this->StructureLampiranIVB21($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis);
+
+    // 🔹 Bersihkan buffer (WAJIB untuk PDF)
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+  switch ($jenis) {
+
+        case 'pdf':
+
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
+            require_once APPPATH . '3rdparty/mpdf/mpdf.php';
+
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A3-L',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 15
+            ]);
+
+            $mpdf->SetTitle("LAMPIRAN IV.B.2.1");
+            $mpdf->WriteHTML($cRet);
+            $mpdf->Output('Lampiran'.$laporan.'.pdf', 'I');
+            exit;
+
+        break;
+
+
+        case 'excel':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".xls");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'word':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-word");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".doc");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'html':
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        default:
+            show_error('Format cetak tidak dikenal');
+        break;
+         }
+        } 
+
+    function cetakLampiranIVB23() {
+  // ADIT LAPORAN PENGGUNAAN
+    
+
+    if($this->auth->is_logged_in() == false){
+        redirect(site_url().'/welcome/login');
+    }
+         
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+
+  
+    $laporan = $this->input->get('laporan');
+
+    $tahun   = $this->input->get('tahun');
+    $tgl     = $this->input->get('tgl');
+    $inpBulan  = $this->input->get('bulan');
+    $laporan = $this->input->get('laporan');
+    $date    = new DateTime($tgl); // <--- MENGAMBIL FORMAT TGL DARI INPUT TANGGAL CETAK
+    $hari    = $date->format('d'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL TANGGAL SAJA -> 31
+    $dBulan  = $date->format('m'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA BULAN SAJA -> 12
+    $jenis = $this->input->get('jenis');
+    $dTahun  = $date->format(20 . 'y'); // <--- CONTOH FORMAT TANGGAL 2025-12-31 DIAMBIL ANGKA TAHUN SAJA -> 25 (20 . 25) = 2025
+
+    $inputBulan = $this->db                        
+    ->get_where('bulan', ['n_bulan' => $inpBulan])
+    ->row('nama_bulan') ?? '-';                    
+
+
+    $bulan = $this->db
+    ->get_where('bulan', ['n_bulan' => $dBulan])
+    ->row('nama_bulan') ?? '-';
+
+    $cRet = $this->StructureLampiranIVB23($inputBulan, $tahun, $hari, $bulan, $dTahun, $jenis);
+
+    // 🔹 Bersihkan buffer (WAJIB untuk PDF)
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+  switch ($jenis) {
+
+        case 'pdf':
+
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+
+            require_once APPPATH . '3rdparty/mpdf/mpdf.php';
+
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A3-L',
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 15
+            ]);
+
+            $mpdf->SetTitle("LAMPIRAN IV.B.2.3");
+            $mpdf->WriteHTML($cRet);
+            $mpdf->Output('Lampiran'.$laporan.'.pdf', 'I');
+            exit;
+
+        break;
+
+
+        case 'excel':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".xls");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'word':
+
+            header("Cache-Control: no-cache, no-store, must-revalidate");
+            header("Content-Type: application/vnd.ms-word");
+            header("Content-Disposition: attachment; filename=Lampiran".$laporan.".doc");
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        case 'html':
+
+            echo $cRet;
+            exit;
+
+        break;
+
+
+        default:
+            show_error('Format cetak tidak dikenal');
+        break;
+         }
+        }  
+
+    private function StructureLampiranIVB11($inputBulan, $tahun, $hari, $bulan, $dTahun) {
+
+    $cRet = "";
+
+    $cRet .= '
+        <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 7pt;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0 auto; /* Penting: agar tabel terpusat */
+        }
+
+        th, td {
+            border: 0.5px solid #000;
+            text-align: center;
+            vertical-align: middle;
+            padding: 2px;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+        th {
+            font-weight: bold;
+            background-color: #bfbfbf;
+        }
+
+        .header-table {
+            width: 100%;
+            margin-bottom: 10px;
+            border: none;
+        }
+
+        .header-table td {
+            border: none;
+            vertical-align: top;
+            padding: 5px;
+        }
+
+        .header-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 8pt;
+        }
+
+        .tfooter td {
+            background-color: #bfbfbf;
+            font-weight: bold;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            white-space: nowrap;
+            padding: 5px 1px;
+            font-size: 6.5pt;
+        }
+
+        .header-logo {
+            text-align: left;
+            padding-left: 45px;
+        }
+
+        .signature {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 7pt;
+            line-height: 1.4;
+            width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .signature p {
+            margin: 0;
+        }
+
+        .signature .name {
+            font-weight: bold;
+            text-decoration: underline;
+            white-space: nowrap;
+        }
+
+        .signature .nip {
+            font-weight: bold;
+        }
+
+        /* Untuk memastikan tabel header tidak melebar */
+        .header-col-1 {
+            width: 20%;
+        }
+        .header-col-2 {
+            width: 60%;
+        }
+        .header-col-3 {
+            width: 20%;
+        }
+
+        </style>
+
+        <br><br>
+
+        <!-- HEADER: LOGO + JUDUL -->
+        <table class="header-table">
+            <tr>
+                <td class="header-col-1 header-logo">
+                    <img src="' . base_url('lib/images/Mappi.png') . '" width="55" style="margin-bottom:5px;"><br>
+                    <span style="font-size: 7pt; font-weight: bold;">
+                        Provinsi Papua Selatan<br>
+                        Kabupaten Mappi
+                    </span>
+                </td>
+                <td class="header-col-2 header-title">
+                    LAPORAN PENERIMAAN PENGGUNAAN DALAM BENTUK PENGGUNAAN PENGALIHAN ATAU PENETAPAN STATUS PENGGUNAAN BMD<br>
+                    INTRAKOMTABEL<br>
+                    PENGGUNA ANGGARAN ATAU PENGELOLA BARANG<br>
+                    ' . strtoupper($inputBulan) . ' ( SEMESTER PERTAMA )<br>
+                    TAHUN ' . $tahun . '
+                </td>
+                <td class="header-col-3"></td>
+            </tr>
+        </table>
+
+        <table>
+            <colgroup>
+                <col style="width: 30px;">  <col style="width: 80px;">  <col style="width: 100px;"> <col style="width: 100px;"> <col style="width: 80px;">  <col style="width: 35px;">  <col style="width: 35px;">  <col style="width: 60px;">  <col style="width: 70px;">  <col style="width: 80px;">  <col style="width: 70px;">  <col style="width: 45px;">  <col style="width: 45px;">  <col style="width: 70px;">  <col style="width: 80px;">  <col style="width: 70px;">  <col style="width: 80px;">  <col style="width: 60px;">  <col style="width: 50px;">  <col style="width: 60px;">  <col style="width: 50px;">  <col style="width: 80px;">  </colgroup>
+
+            <thead>
+                <tr class="header-color">
+                    <th rowspan="2">NIBAR/<br>NUSP</th>
+                    <th colspan="2" style="width: 175px; height:65px;">Penggolongan sesuai kodefikasi barang</th>
+                    <th rowspan="2" style="width: 90px; height: 120px;">Spesifikasi Nama Barang</th>
+                    <th rowspan="2" style="width: 90px;">Spesifikasi Lainnya</th>
+                    <th rowspan="2" class="vertical-text" style="width: 50px;">Jumlah<br>Barang</th>
+                    <th rowspan="2" class="vertical-text" style="width: 50px;">Satuan<br>Barang</th>
+                    <th rowspan="2" class="vertical-text" style="width: 50px;">Harga <br>Barang</th>
+                    <th rowspan="2" class="vertical-text" style="width: 50px;">Jumlah<br>Total</th>
+                    <th rowspan="2" style="width: 75px;">Nilai<br>Akumulasi Penyusutan atau Amortisasi</th>
+                    <th rowspan="2" style="width: 45px;">Nilai Buku</th>
+                    <th rowspan="2" class="vertical-text">Tanggal,Bulan,<br>Tahun Perolehan</th>
+                    <th rowspan="2" class="vertical-text" style="width: 55px;">Cara<br>Perolehan</th>
+                    <th rowspan="2" style="width: 45px;">Lokasi</th>
+                    <th colspan="3">Asal Barang</th>
+                    <th colspan="2" style="width: 100px;">BAST</th>
+                    <th colspan="2">Surat Keputusan Penetapan</th>
+                    <th rowspan="2">Keterangan</th>
+                </tr>
+                <tr class="header-color">
+                    <th style="width: 220px; height: 25px;">Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Pihak Yang Menyerahkan</th>
+                    <th style="width: 75px;">Kode Barang</th>
+                    <th style="width: 75px;">Nama Barang</th>
+                    <th>Nomor</th>
+                    <th>Tanggal</th>
+                    <th>Nomor</th>
+                    <th>Tanggal</th>
+                </tr>
+                <tr class="bg-gray">
+                    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <!-- SAYA PAKAI &nbsp; SEBAGAI TESTING DATA -->
+                    <td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="tfooter">
+                    <td colspan="5">TOTAL</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- SIGNATURE / TANDA TANGAN -->
+
+        <div style="width: 100%; margin-top: 30px; clear: both;">
+            
+        <div style="width: 100%; margin-top: 30px; clear: both;">
+            
+            <div style="float: right; text-align: center; width: 350px; font-size: 11px; line-height: 1.2; margin-right: 75px; font-size: 0.5em">
+                <p style="margin: 0; font-weight: bold;">MAPPI, ' . $hari . ' ' . strtoupper($bulan) . ' ' . $dTahun . '</p>
+                <p style="margin: 0; font-weight: bold;">Pengguna Barang</p>
+                
+                <div style="margin-top: 50px;">
+                    <p style="margin: 0; font-weight: bold; text-decoration: underline; white-space: nowrap;">' . $namapa .'</p>
+                    <p style="margin: 0; font-weight: bold;">NIP. 19710717 200112 1 005</p>
+                </div>
+            </div>
+        </div>
+        
+        ';
+
+        return $cRet;
+
+    }
+
+    private function StructureLampiranIVB21($inputBulan, $tahun, $hari, $bulan, $dTahun) {
+         $cRet = "";
+    
+  $cRet .= '
+    <style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed; 
+        font-size: 8.5pt; /* Sedikit diperbesar karena ukuran kertas A3 lebih luas */
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    th, td {
+        border: 0.5px solid #000;
+        text-align: center;
+        vertical-align: middle;
+        padding: 5px 3px;
+        word-wrap: break-word; 
+        overflow: hidden;
+    }
+
+    th {
+        background-color: #bfbfbf;
+        font-weight: bold;
+    }
+    
+    .header-table td { border: none; vertical-align: top; }
+    .header-title { text-align: center; font-weight: bold; font-size: 11pt; }
+    .tfooter td { background-color: #bfbfbf; font-weight: bold; }
+    .bg-gray { background-color: #bfbfbf; }
+    </style>
+
+    <br><br>
+    <table class="header-table" width="100%" style="margin-bottom: 15px;">
+    <tr>
+        <td width="20%" style="text-align: left;">
+            <img src="lib/images/Mappi.png" width="55" style="margin-left: 45px; margin-bottom: 10px;"><br>
+            <span style="font-size: 8pt;">
+                <b>
+                Provinsi Papua Selatan<br>
+                Kabupaten Mappi
+                </b>
+            </span>
+        </td>
+        <td width="60%" class="header-title">
+            LAPORAN PENGGUNAAN SEMENTARA BMD<br>
+            INTRAKOMTABEL<br>
+            PENGGUNA ANGGARAN ATAU PENGELOLA BARANG<br>
+            SEMESTER PERTAMA<br>
+            TAHUN ' . $tahun . '
+        </td>
+        <td width="20%"></td>
+    </tr>
+    </table>
+
+    <table>
+
+        <colgroup>
+        <col style="width: 200px;">   <!-- Nomor -->
+        <col style="width: 60px;">   <!-- NIBAR -->
+        <col style="width: 120px;">  <!-- Kode Barang -->
+        <col style="width: 180px;">  <!-- Nama Barang -->
+        <col style="width: 140px;">  <!-- Spesifikasi -->
+        <col style="width: 70px;">  <!-- Pengguna -->
+        <col style="width: 50px;">   <!-- Jumlah -->
+        <col style="width: 60px;">   <!-- Satuan -->
+        <col style="width: 90px;">   <!-- Lokasi -->
+        <col style="width: 90px;">   <!-- Waktu -->
+        <col style="width: 70px;">   <!-- Mulai -->
+        <col style="width: 70px;">   <!-- Berakhir -->
+        <col style="width: 110px;">  <!-- Peruntukan -->
+        <col style="width: 80px;">   <!-- SP Nomor -->
+        <col style="width: 80px;">   <!-- SP Tgl -->
+        <col style="width: 80px;">   <!-- PJ Nomor -->
+        <col style="width: 80px;">   <!-- PJ Tgl -->
+        <col style="width: 120px;">  <!-- Keterangan -->
+        </colgroup>
+
+        <thead>
+            <tr>
+                <th rowspan="3" style="heigth: 500px;">Nomor</th>
+                <th rowspan="3" style="heigth: 250px;">NIBAR</th>
+                <th colspan="2" style="width: 250px; height: 100px;">Penggolongan sesuai kodefikasi barang</th>
+                <th rowspan="3" style="width: 105px;" >Spesifikasi Nama Barang</th>
+                <th rowspan="3" style="width: 90px;">Pengguna Barang Sementara</th>
+                <th rowspan="3" style="width: 45px;">Jumlah</th>
+                <th rowspan="3" style="width: 45px;">Satuan</th>
+                <th rowspan="3" style="width: 45px;">Lokasi</th>
+                <th colspan="3" rowspan="2">Jangka Waktu</th>
+                <th rowspan="3">Peruntukan</th>
+                <th colspan="4">Dasar Penggunaan</th>
+                <th rowspan="3" style="width: 50px;">Ketera<br>ngan</th>
+            </tr>
+            <tr class="row-header-2">
+                <th rowspan="2" style="width: 170px; height: 50px;">Kode Barang</th>
+                <th rowspan="2" style="width: 85px; height: 100px;">Nama Barang</th>
+                <th colspan="2">Surat Persetujuan</th>
+                <th colspan="2">Surat Perjanjian</th>
+            </tr>
+            <tr class="row-header-3">
+                <th style="height: 40px; width: 100px;">Waktu Penggunaan</th>
+                <th>Mulai</th>
+                <th>Berakhir</th>
+                <th>Nomor</th>
+                <th>Tanggal</th>
+                <th>Nomor</th>
+                <th>Tanggal</th>
+            </tr>
+            <tr class="bg-gray">
+                <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="height: 35px;">
+                <td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="tfooter">
+                <td colspan="6" style="height: 15px;">TOTAL</td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div style="width: 100%; margin-top: 40px; clear: both;">
+        <div style="float: right; text-align: center; width: 450px; line-height: 1.5; margin-right: 50px; font-size: 9pt;">
+            <p style="margin: 0; font-weight: bold;">MAPPI, ' . $hari . ' ' .  strtoupper($bulan) . ' ' .    $dTahun .'</p>
+            <p style="margin: 0; font-weight: bold;">Pengguna Barang</p>
+            
+            <div style="margin-top: 70px;">
+                <p style="margin: 0; font-weight: bold; text-decoration: underline; white-space: nowrap;">' . $namapa . '</p>
+                <p style="margin: 0; font-weight: bold;">NIP. 19710717 200112 1 005</p>
+            </div>
+        </div>
+    </div>
+    ';
+
+    return $cRet;
+    }
+
+    private function StructureLampiranIVB23($inputBulan, $tahun, $hari, $bulan, $dTahun) {
+
+            $cRet = "";
+
+    $cRet .= '
+        <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed; 
+            font-size: 8.5pt;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        th, td {
+            border: 0.5px solid #000;
+            text-align: center;
+            vertical-align: middle;
+            padding: 5px 3px;
+            word-wrap: break-word; 
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #bfbfbf;
+            font-weight: bold;
+        }
+        
+        .header-table td { border: none; vertical-align: top; }
+        .header-title { text-align: center; font-weight: bold; font-size: 11pt; }
+        .tfooter td { background-color: #bfbfbf; font-weight: bold; }
+        .bg-gray { background-color: #bfbfbf; }
+        .b-spasi { display: inline-block; width: 150px; }
+        </style>
+
+        <br><br>
+        <table class="header-table" width="100%" style="margin-bottom: 15px;">
+        <tr>
+            <td width="30%" style="text-align: left;">
+                <img src="lib/images/Mappi.png" width="55" style="margin-left: 45px; margin-bottom: 20px;"><br>
+                <span style="font-size: 8pt;">
+                    <b class="b-spasi">Provinsi Papua Selatan</b><br>
+                    <b class="b-spasi">Kabupaten Mappi</b><br>
+                    <b class="b-spasi">Kuasa Pengguna Barang :</b><br> <!-- Nama -->
+                    <b class="b-spasi">Pengguna Barang :</b> <!-- Nama -->
+                </span>
+            </td>
+            <td width="40%" class="header-title">
+                LAPORAN PENGAKHIRAN PENGGUNAAN SEMENTARA BMD<br>
+                INTRAKOMTABEL<br>
+                PENGGUNA ANGGARAN ATAU PENGELOLA BARANG<br>
+                ' . strtoupper($inputBulan) . ' (SEMESTER PERTAMA)<br>
+                TAHUN ' . $tahun . '
+            </td>
+            <td width="30%"></td>
+        </tr>
+        </table>
+
+        <table>
+            <colgroup>
+                <col style="width: 35px;">  <col style="width: 55px;">  <col style="width: 140px;"> <col style="width: 140px;"> <col style="width: 120px;"> <col style="width: 100px;"> <col style="width: 100px;"> <col style="width: 100px;"> <col style="width: 90px;">  <col style="width: 80px;">  <col style="width: 100px;"> <col style="width: 90px;">  <col style="width: 80px;">  <col style="width: 100px;"> <col style="width: 100px;"> <col style="width: 120px;"> </colgroup>
+
+            <thead>
+                <tr>
+                    <th rowspan="2">Nomor</th>
+                    <th rowspan="2">NIBAR</th>
+                    <th colspan="2" style="height: 60px; width: 220px;">Penggolongan sesuai kodefikasi barang</th>
+                    <th rowspan="2" style="width: 80x;">Spesifikasi Nama Barang</th>
+                    <th colspan="3">Data Pengembalian Pengguna Sementara</th>
+                    <th colspan="2">BAST Pengembalian</th>
+                    <th colspan="3">Dokumen Pendukung Lainnya</th>
+                    <th colspan="2">Penerima Pengembalian</th>
+                    <th rowspan="2" style="width: 60px;">Keteran<br>gan</th>
+                </tr>
+                <tr class="row-header-2">
+                    <th style="width: 120px; height: 60px;">Kode Barang</th>
+                    <th>Nama<br>Barang</th>
+                    <th>Nama</th>
+                    <th>Jabatan</th>
+                    <th style="width: 100px;">Pengguna Barang</th>
+                    <th>Nomor</th>
+                    <th>Tanggal</th>
+                    <th>Nama</th>
+                    <th>Nomor</th>
+                    <th>Tanggal</th>
+                    <th>Nama</th>
+                    <th>Jabatan</th>
+                </tr>
+                <tr class="bg-gray">
+                    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="tfooter">
+                    <td colspan="5">TOTAL</td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div style="width: 100%; margin-top: 40px; clear: both;">
+            <div style="float: right; text-align: center; width: 450px; line-height: 1.5; margin-right: 50px; font-size: 9pt;">
+                <p style="margin: 0; font-weight: bold;">MAPPI, ' . $hari . ' ' .  strtoupper($bulan) . ' ' . $dTahun .'</p>
+                <p style="margin: 0; font-weight: bold;">Pengguna Barang</p>
+                
+                <div style="margin-top: 70px;">
+                    <p style="margin: 0; font-weight: bold; text-decoration: underline; white-space: nowrap;">' . $namapa . '</p>
+                    <p style="margin: 0; font-weight: bold;">NIP. 19710717 200112 1 005</p>
+                </div>
+            </div>
+        </div>
+    ';
+
+    return $cRet;
+    }
+
     function cetak_pengeluaran()
     {
         if($this->auth->is_logged_in() == false){
