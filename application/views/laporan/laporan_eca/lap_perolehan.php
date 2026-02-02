@@ -20,90 +20,136 @@
 
     $("#price").hide();
 
-    function cetak(format) {
-        gettingList();
-
-        var urut = document.querySelector("#price").value;
-        var docLocation;
-
-        if (urut == 111) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.1.1.1';
-        } else if (urut == 121) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.1.2.1';
-        } else if (urut == 122) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.1.2.2';
-        } else if (urut == 131) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.1.3.1';
-        } else if (urut == 21) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.2.1';
-        } else if (urut == 31) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.3.1';
-        } else if (urut == 41) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.4.1';
-        } else if (urut == 51) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.5.1';
-        } else if (urut == 61) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.6.1';
-        } else if (urut == 71) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.7.1';
-        } else if (urut == 81) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.8.1';
-        } else if (urut == 91) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.9.1';
-        } else if (urut == 101) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.10.1';
-        } else {
-            alert('cek pilihan cetakan');
-            return;
-        }
-
-        // Tambahkan ekstensi file sesuai format yang dipilih
-        switch (format) {
-            case 1: // PDF
-                docLocation += '.pdf';
-                break;
-            case 2: // Excel
-                docLocation += '.xlsx';
-                break;
-            case 3: // Word
-                docLocation += '.docx';
-                break;
-            case 4: // HTML
-                docLocation += '.html';
-                break;
-            default:
-                alert('Format tidak valid');
-                return;
-        }
-
-        window.open(docLocation, "resizeable,scrollbar");
-    }
-
     function gettingList() {
         let itemsList = document.querySelector('#itemsList');
         let price = itemsList.value;
         let item = itemsList.options[itemsList.selectedIndex].text;
-
+    
         document.querySelector("#price").value = price;
         document.querySelector("#item").value = item;
-
+    
         console.log(price, item);
     }
+    
+    function cetak(format) {
 
-    function cetakanpdf(){
-        $('#itemsList').combogrid({  
-            panelWidth:300,  
-            idField:'price',  
-            textField:'item',  
-            mode:'remote',
-            url:'<?php echo base_url(); ?>index.php/master/ambil_file_pdf',  
-            columns:[[  
-                {field:'price',title:'No',width:50},  
-                {field:'item',title:'NAMA BULAN',width:250}    
-            ]],  
-            onSelect:function(rowIndex,rowData){ }  
-        });
+    let laporan = document.getElementById('itemsList').value;
+    let bulan   = $('#bulan').combogrid('getValue');
+    let tahun   = $('#tahun').combogrid('getValue');
+    let tgl     = $('#tgl_cetak').datebox('getValue');
+
+    if (!laporan || laporan === 'SILAHKAN PILIH LAPORAN PENGGUNAAN') {
+        alert('Pilih laporan dulu');
+        return false;
     }
+
+    let jenis = '';
+
+    if (format == 1) jenis = 'pdf';
+    if (format == 2) jenis = 'excel';
+    if (format == 3) jenis = 'word';
+    if (format == 4) jenis = 'html';
+
+    let url = '';
+
+    // contoh: Lampiran IV.B.1.1
+    if (laporan === "111") {
+        url = '<?php echo base_url("index.php/laporan_eca/CetakLampiranIV111"); ?>';
+    } else if (laporan === "121") {
+        url = '<?php echo base_url("index.php/laporan_eca/CetakLampiranIV121"); ?>';
+    } else if (laporan === "122") {
+        url = '<?php echo base_url("index.php/laporan_eca/CetakLampiranIV122"); ?>';
+    }
+
+    if (url !== '') {
+        url += '?laporan=' + laporan
+            + '&bulan=' + bulan
+            + '&tahun=' + tahun
+            + '&tgl=' + tgl
+            + '&jenis=' + jenis;
+
+        window.open(url, '_blank');
+    }
+
+    return false;
+}
+
+
+    // function cetak(format) {
+    //     gettingList();
+
+    //     var urut = document.querySelector("#price").value;
+    //     var docLocation;
+
+    //     if (urut == 111) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.1.1.1';
+    //     } else if (urut == 121) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.1.2.1';
+    //     } else if (urut == 122) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.1.2.2';
+    //     } else if (urut == 131) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.1.3.1';
+    //     } else if (urut == 21) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.2.1';
+    //     } else if (urut == 31) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.3.1';
+    //     } else if (urut == 41) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.4.1';
+    //     } else if (urut == 51) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.5.1';
+    //     } else if (urut == 61) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.6.1';
+    //     } else if (urut == 71) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.7.1';
+    //     } else if (urut == 81) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.8.1';
+    //     } else if (urut == 91) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.9.1';
+    //     } else if (urut == 101) {
+    //         docLocation = 'http://10.10.11.44/simbakda_2024/laporan/a. Laporan Perolehan atau Penerimaan IV.A/LAMPIRAN IV.A.10.1';
+    //     } else {
+    //         alert('cek pilihan cetakan');
+    //         return;
+    //     }
+
+    //     // Tambahkan ekstensi file sesuai format yang dipilih
+    //     switch (format) {
+    //         case 1: // PDF
+    //             docLocation += '.pdf';
+    //             break;
+    //         case 2: // Excel
+    //             docLocation += '.xlsx';
+    //             break;
+    //         case 3: // Word
+    //             docLocation += '.docx';
+    //             break;
+    //         case 4: // HTML
+    //             docLocation += '.html';
+    //             break;
+    //         default:
+    //             alert('Format tidak valid');
+    //             return;
+    //     }
+
+    //     window.open(docLocation, "resizeable,scrollbar");
+    // }
+
+
+    // function cetakanpdf(){
+    //     $('#itemsList').combogrid({  
+    //         panelWidth:300,  
+    //         idField:'price',  
+    //         textField:'item',  
+    //         mode:'remote',
+    //         url:'<?php echo base_url(); ?>index.php/master/ambil_file_pdf',  
+    //         columns:[[  
+    //             {field:'price',title:'No',width:50},  
+    //             {field:'item',title:'NAMA BULAN',width:250}    
+    //         ]],  
+    //         onSelect:function(rowIndex,rowData){ }  
+    //     });
+    // }
+
 
     function bulan(){
         $('#bulan').combogrid({  
@@ -157,7 +203,7 @@
             </select>
 
             <input placeholder="Price" type="text" id="price" style="display:none;">
-            <input placeholder="Item" type="text" id="item" style="width:50%;" >
+            <input placeholder="Item" type="text" id="item" style="width:50%;" disabled>
 
             <tr>
                 <td colspan="3">
