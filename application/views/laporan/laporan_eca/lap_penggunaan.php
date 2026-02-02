@@ -20,59 +20,61 @@
 
     $("#price").hide();
 
-    function cetak(format) {
-        gettingList();
-
-        var urut = document.querySelector("#price").value;
-        var docLocation;
-
-        if (urut == 11) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/b. Laporan Penggunaan IV.B/LAMPIRAN IV.B.1.1';
-        } else if (urut == 21) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/b. Laporan Penggunaan IV.B/LAMPIRAN IV.B.2.1';
-        } else if (urut == 23) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/b. Laporan Penggunaan IV.B/LAMPIRAN IV.B.2.3';
-        } else if (urut == 31) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/b. Laporan Penggunaan IV.B/LAMPIRAN IV.B.3.1';
-        } else if (urut == 33) {
-            docLocation = 'http://10.10.11.44/simbakda_2024/laporan/b. Laporan Penggunaan IV.B/LAMPIRAN IV.B.3.3';
-        } else {
-            alert('cek pilihan cetakan');
-            return;
-        }
-
-        // Tambahkan ekstensi file sesuai format yang dipilih
-        switch (format) {
-            case 1: // PDF
-                docLocation += '.pdf';
-                break;
-            case 2: // Excel
-                docLocation += '.xlsx';
-                break;
-            case 3: // Word
-                docLocation += '.docx';
-                break;
-            case 4: // HTML
-                docLocation += '.html';
-                break;
-            default:
-                alert('Format tidak valid');
-                return;
-        }
-
-        window.open(docLocation, "resizeable,scrollbar");
-    }
-
     function gettingList() {
         let itemsList = document.querySelector('#itemsList');
         let price = itemsList.value;
         let item = itemsList.options[itemsList.selectedIndex].text;
-
+    
         document.querySelector("#price").value = price;
         document.querySelector("#item").value = item;
-
+    
         console.log(price, item);
     }
+    
+    function cetak(format) {
+
+    let laporan = document.getElementById('itemsList').value;
+    let bulan   = $('#bulan').combogrid('getValue');
+    let tahun   = $('#tahun').combogrid('getValue');
+    let tgl     = $('#tgl_cetak').datebox('getValue');
+
+    if (!laporan || laporan === 'SILAHKAN PILIH LAPORAN PENGGUNAAN') {
+        alert('Pilih laporan dulu');
+        return false;
+    }
+
+    let jenis = '';
+
+    if (format == 1) jenis = 'pdf';
+    if (format == 2) jenis = 'excel';
+    if (format == 3) jenis = 'word';
+    if (format == 4) jenis = 'html';
+
+    let url = '';
+
+    // contoh: Lampiran IV.B.1.1
+    if (laporan === "11") {
+        url = '<?php echo base_url("index.php/laporan_eca/CetakLampiranIVB11"); ?>';
+    } else if (laporan === "21") {
+        url = '<?php echo base_url("index.php/laporan_eca/CetakLampiranIVB21"); ?>';
+    } else if (laporan === "23") {
+        url = '<?php echo base_url("index.php/laporan_eca/CetakLampiranIVB23"); ?>';
+    }
+
+    if (url !== '') {
+        url += '?laporan=' + laporan
+            + '&bulan=' + bulan
+            + '&tahun=' + tahun
+            + '&tgl=' + tgl
+            + '&jenis=' + jenis;
+
+        window.open(url, '_blank');
+    }
+
+    return false;
+}
+
+
 
     function cetakanpdf(){
         $('#itemsList').combogrid({  
